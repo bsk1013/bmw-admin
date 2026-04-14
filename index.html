@@ -6793,6 +6793,13 @@ document.addEventListener('DOMContentLoaded', function(){
 const STORAGE_KEY="bmw_finance_vfinal_step2";
 const OPERATING_PASSWORD=atob("ODgxMDEz");
 const SHARE_PASSWORD=atob("MzAxOA==");
+const OPERATING_PASSWORD_HASH="5d5d3ecdcc092fbe969f69014ca0d75f4fcae3d8471701570b584a21f550ebc0";
+const SHARE_PASSWORD_HASH="18c6c376df8c76ea90c0f9eb2c2873ee1cb43d5a37e5281fb242c2b97c26ee04";
+async function sha256Hex(str){
+  const buf = new TextEncoder().encode(String(str ?? ""));
+  const hash = await crypto.subtle.digest("SHA-256", buf);
+  return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2,"0")).join("");
+}
 const incomeTypes=["회비","이자","찬조금","기타수입"];
 const expenseTypes=["정기총회","임시모임","특별모임","여름휴가","결혼식","장례(직계)","장례(조부모)","출산","돌맞이","생일","선납페이백","임원활동비","기타지출"];
 /* DONUT_CATEGORY_COLOR_LOCK_START : 모임=노랑 / 경조사=파랑 / 운영=녹색 */
@@ -14989,11 +14996,12 @@ html,body{scrollbar-width:auto;}
    이후 기능 개선 작업은 이 블록을 수정하지 않습니다.
    ========================================================= */
 (function(){
-  function loginUnlockCore(){
+  async function loginUnlockCore(){
     enforcePasswordConsistency(state);
-    const entered = String(pw.value||"").trim();
+    const entered = String((pw && pw.value) || "").trim();
+    const hashed = await sha256Hex(entered);
     let accessMode = "";
-    if(entered===OPERATING_PASSWORD){
+    if(hashed===OPERATING_PASSWORD_HASH){
       accessMode = "operating";
     }else{
       alert("비밀번호가 올바르지 않습니다.");
@@ -32053,13 +32061,22 @@ html,body{scrollbar-width:auto;}
 })();
 </script>
 
+<script>
+async function sha256Hex(str){
+  const buf = new TextEncoder().encode(String(str ?? ""));
+  const hash = await crypto.subtle.digest("SHA-256", buf);
+  return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2,"0")).join("");
+}
+</script>
+
 <script id="login-core-protected">
 /* SHARE LOGIN CORE */
 (function(){
-  function loginUnlockCore(){
+  async function loginUnlockCore(){
     const entered = String((pw && pw.value) || "").trim();
-    const SHARE_PASSWORD_B64 = "MzAxOA=="; // 3018
-    if(entered !== atob(SHARE_PASSWORD_B64)){
+    const hashed = await sha256Hex(entered);
+    const SHARE_PASSWORD_HASH = "18c6c376df8c76ea90c0f9eb2c2873ee1cb43d5a37e5281fb242c2b97c26ee04";
+    if(hashed !== SHARE_PASSWORD_HASH){
       alert("비밀번호가 올바르지 않습니다.");
       return;
     }
