@@ -6420,7 +6420,54 @@ document.addEventListener('DOMContentLoaded', function(){
 #data .deploy-card .must{display:inline-flex;align-items:center;gap:6px;padding:4px 8px;border-radius:999px;background:rgba(59,130,246,.16);border:1px solid rgba(59,130,246,.22);font-size:12px;color:#dbeafe}
 </style>
 
-</head><body>
+<script id="bmw-ios-zoom-fix">
+(function(){
+  // iOS Safari: input focus 시 자동 줌인 완전 차단
+  // font-size:16px 로도 막히지 않는 케이스 보완
+  var IS_IOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+  if(!IS_IOS) return;
+
+  function setViewportScale(scale){
+    var vp = document.querySelector('meta[name="viewport"]');
+    if(!vp) return;
+    var content = vp.getAttribute('content') || '';
+    // maximum-scale 세팅
+    if(/maximum-scale/.test(content)){
+      content = content.replace(/maximum-scale=[^,]+/, 'maximum-scale='+scale);
+    } else {
+      content = content + ',maximum-scale=' + scale;
+    }
+    vp.setAttribute('content', content);
+  }
+
+  function onFocus(e){
+    var tag = (e.target && e.target.tagName || '').toLowerCase();
+    if(tag === 'input' || tag === 'select' || tag === 'textarea'){
+      setViewportScale(1);
+    }
+  }
+
+  function onBlur(e){
+    var tag = (e.target && e.target.tagName || '').toLowerCase();
+    if(tag === 'input' || tag === 'select' || tag === 'textarea'){
+      // blur 후 줌 상태 리셋: scrollTop 강제 초기화
+      setTimeout(function(){
+        setViewportScale(1);
+        // 줌 해제: window scroll 트릭
+        document.body.scrollTop = document.body.scrollTop;
+        if(document.scrollingElement){
+          var st = document.scrollingElement.scrollTop;
+          document.scrollingElement.scrollTop = st + 1;
+          document.scrollingElement.scrollTop = st;
+        }
+      }, 50);
+    }
+  }
+
+  document.addEventListener('focusin', onFocus, true);
+  document.addEventListener('focusout', onBlur, true);
+})();
+</script></head><body>
 <!-- APP SECTION: login lock screen -->
 <div class="lock" id="lock"><div class="lock-card"><div class="brand"><div class="logo" id="loginLogo" onclick="return goDashboardFromLogo(event)">BI</div><div><h2>BMW 재정 플랫폼</h2><div class="sub">BoMunWildcard · 보문고등학교 30기</div></div></div><div style="margin-top:14px"><input id="pw" placeholder="비밀번호 입력" type="password"/></div><div class="actions" style="margin-top:12px"><button class="btn primary" id="loginBtn">접속</button></div></div></div>
 <!-- APP SECTION: main application shell -->
@@ -23528,7 +23575,54 @@ document.addEventListener('DOMContentLoaded', function(){
 }
 </style>
 
-</head><body>
+<script id="bmw-ios-zoom-fix">
+(function(){
+  // iOS Safari: input focus 시 자동 줌인 완전 차단
+  // font-size:16px 로도 막히지 않는 케이스 보완
+  var IS_IOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+  if(!IS_IOS) return;
+
+  function setViewportScale(scale){
+    var vp = document.querySelector('meta[name="viewport"]');
+    if(!vp) return;
+    var content = vp.getAttribute('content') || '';
+    // maximum-scale 세팅
+    if(/maximum-scale/.test(content)){
+      content = content.replace(/maximum-scale=[^,]+/, 'maximum-scale='+scale);
+    } else {
+      content = content + ',maximum-scale=' + scale;
+    }
+    vp.setAttribute('content', content);
+  }
+
+  function onFocus(e){
+    var tag = (e.target && e.target.tagName || '').toLowerCase();
+    if(tag === 'input' || tag === 'select' || tag === 'textarea'){
+      setViewportScale(1);
+    }
+  }
+
+  function onBlur(e){
+    var tag = (e.target && e.target.tagName || '').toLowerCase();
+    if(tag === 'input' || tag === 'select' || tag === 'textarea'){
+      // blur 후 줌 상태 리셋: scrollTop 강제 초기화
+      setTimeout(function(){
+        setViewportScale(1);
+        // 줌 해제: window scroll 트릭
+        document.body.scrollTop = document.body.scrollTop;
+        if(document.scrollingElement){
+          var st = document.scrollingElement.scrollTop;
+          document.scrollingElement.scrollTop = st + 1;
+          document.scrollingElement.scrollTop = st;
+        }
+      }, 50);
+    }
+  }
+
+  document.addEventListener('focusin', onFocus, true);
+  document.addEventListener('focusout', onBlur, true);
+})();
+</script></head><body>
 <!-- APP SECTION: login lock screen -->
 <div class="lock" id="lock"><div class="lock-card"><div class="brand"><div class="logo" id="loginLogo" onclick="return goDashboardFromLogo(event)">BI</div><div><h2>BMW 재정 플랫폼</h2><div class="sub">BoMunWildcard · 보문고등학교30기</div></div></div><div style="margin-top:14px"><input id="pw" placeholder="비밀번호 입력" type="password"/></div><div class="actions" style="margin-top:12px"><button class="btn primary" id="loginBtn">접속</button></div></div></div>
 <!-- APP SECTION: main application shell -->
