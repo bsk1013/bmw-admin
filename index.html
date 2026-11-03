@@ -30,14 +30,14 @@ FUNCTION CLUSTERS
 -->
 <style>
 :root{--line:rgba(255,255,255,.10);--text:#ecf2ff;--muted:#9fb0d6;--blue:#3b82f6;--amber:#f59e0b;--green:#34d399;--red:#ef4444}
-*{box-sizing:border-box}html,body{margin:0;padding:0;overflow-x:hidden;background:radial-gradient(900px 500px at 0% -10%, rgba(59,130,246,.18), transparent 45%),radial-gradient(800px 500px at 100% 0%, rgba(139,92,246,.14), transparent 40%),linear-gradient(180deg,#08101d,#0d1526);color:var(--text);font-family:Arial,sans-serif}
-.wrap{max-width:1480px;margin:0 auto;padding:24px;overflow-x:hidden}.lock{position:fixed;inset:0;display:grid;place-items:center;background:rgba(4,8,16,.88);padding:20px;z-index:50}
+*{box-sizing:border-box}html,body{margin:0;padding:0;overflow-x:clip;background:radial-gradient(900px 500px at 0% -10%, rgba(59,130,246,.18), transparent 45%),radial-gradient(800px 500px at 100% 0%, rgba(139,92,246,.14), transparent 40%),linear-gradient(180deg,#08101d,#0d1526);color:var(--text);font-family:Arial,sans-serif}
+.wrap{max-width:1480px;margin:0 auto;padding:24px;overflow-x:clip}.lock{position:fixed;inset:0;display:grid;place-items:center;background:rgba(4,8,16,.88);padding:20px;z-index:50}
 .lock-card,.card{background:linear-gradient(180deg,rgba(19,32,58,.96),rgba(16,25,44,.96));border:1px solid var(--line);border-radius:22px;box-shadow:0 18px 40px rgba(0,0,0,.30);backdrop-filter:blur(12px)}
 .lock-card{width:min(460px,100%);padding:22px}.brand{display:flex;gap:12px;align-items:center}.logo{width:56px;height:56px;border-radius:50%;display:grid;place-items:center;background:#0e1a31;border:1px solid var(--line);font-weight:800;letter-spacing:.08em;overflow:hidden;flex:0 0 auto}.logo img{width:100%;height:100%;object-fit:cover}
 h1,h2,h3{margin:0}.sub{color:var(--muted);font-size:12px}input,select,textarea{width:100%;padding:11px 12px;border-radius:12px;border:1px solid var(--line);background:#0c1628;color:var(--text);outline:none;font-size:16px}textarea{min-height:90px;resize:vertical}
 .btn{border:1px solid var(--line);background:#1a2a47;color:#fff;border-radius:12px;padding:10px 14px;cursor:pointer}.btn.primary{background:#1f4ed8}
-.row,.topbar,.nav,.actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.topbar{justify-content:space-between;margin-bottom:18px}.tab.active,.month-btn.active{background:#1f4ed8}
-.page{display:none}.page.active{display:block;overflow-x:hidden}.grid4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.card{padding:16px}
+.row,.topbar,.nav,.actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.topbar{justify-content:space-between;margin-bottom:18px;position:sticky!important;top:0!important;z-index:1000!important;background:rgba(8,16,29,.97)}.tab.active,.month-btn.active{background:#1f4ed8}
+.page{display:none}.page.active{display:block;overflow-x:clip}.grid4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.card{padding:16px}
 .kpi .label{font-size:12px;color:var(--muted)}.kpi .value{font-size:30px;font-weight:800;margin-top:8px}.table-wrap{overflow:auto}table{width:100%;border-collapse:collapse;table-layout:fixed}th,td{padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.08);vertical-align:top;font-size:13px}th{text-align:center;background:#173055}
 .w-date{width:92px;text-align:center}
 .w-kind{width:64px;text-align:center}
@@ -1627,11 +1627,7 @@ justify-content:flex-start;
   0%,100%{ transform:scale(1); filter:drop-shadow(0 0 0 rgba(252,165,165,0)); }
   50%{ transform:scale(1.08); filter:drop-shadow(0 0 10px rgba(252,165,165,.28)); }
 }
-html[data-access-mode="share"] .metric-msg-btn,
-body[data-access-mode="share"] .metric-msg-btn,
-#app[data-access-mode="share"] .metric-msg-btn{
-  display:none !important;
-}
+
 
 
 /* === v20 UI FIX (강제 적용) === */
@@ -2260,6 +2256,19 @@ body[data-access-mode="share"] .metric-msg-btn,
 .fy-tab:hover:not(.active){background:rgba(59,130,246,.10);color:var(--text)}
 .fy-context-badge{font-size:10px;color:var(--muted);padding:1px 0 4px 2px;opacity:.72;white-space:nowrap;flex-shrink:0}
 
+.compare-selector-row{display:grid;grid-template-columns:82px 82px minmax(0,1fr);gap:12px;margin-top:10px;align-items:center}
+.compare-selector-row>div{min-width:0}.compare-selector-row select{width:100%;min-width:0}
+.compare-meta{min-width:0;text-align:right;font-size:11px;line-height:1.4;color:#94a3b8}
+.compare-meta-legend{display:flex;justify-content:flex-end;gap:12px;margin-bottom:3px;font-size:12px;color:#cbd5e1;white-space:nowrap}
+.compare-meta-summary{overflow-wrap:anywhere}
+.compare-tab-bar #compareDetailToggle{margin-left:auto;padding:6px 9px}
+@media(max-width:480px){.compare-selector-row{grid-template-columns:66px 66px minmax(0,1fr);gap:8px}.compare-selector-row select{padding-left:7px;padding-right:3px;font-size:13px}.compare-selector-row .note{font-size:10px}.compare-meta{font-size:10px}.compare-meta-legend{font-size:10px;gap:9px}}
+
+.compare-inspector{display:flex;gap:10px;align-items:center;border-top:1px solid rgba(148,163,184,.16);padding-top:9px;margin-top:5px}
+.compare-inspect-year{flex:0 0 76px;width:76px;min-width:0;padding:7px 4px;font-size:12px}
+.compare-year-readout{flex:1;min-width:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;text-align:right;font-size:10px;line-height:1.5}
+.compare-year-readout span{display:block;color:#94a3b8}.compare-year-readout strong{display:block;font-size:clamp(9px,2.5vw,12px);font-variant-numeric:tabular-nums;white-space:nowrap;letter-spacing:-.3px}
+@media(max-width:480px){.compare-inspector{gap:6px}.compare-inspect-year{flex-basis:62px;width:62px;font-size:11px}.compare-year-readout{gap:4px}.compare-year-readout strong{font-size:9px}}
 .compare-card{min-height:0;overflow:visible}.compare-card .compare-header h3{font-size:inherit;margin:0}.compare-body{overflow:visible}#compareRangeChart,#compareABChart{min-width:0;overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;width:100%}
 .compare-toggle-icon{font-size:13px;color:var(--muted);transition:transform .2s}
 .compare-toggle-icon.open{transform:rotate(180deg)}
@@ -2301,6 +2310,13 @@ body[data-access-mode="share"] .metric-msg-btn,
   .dash-main-right > .card{height:100%;box-sizing:border-box}
 }
 /* ===== END BMW 데스크톱 ===== */
+
+/* Finance chart motion: SVG-local transforms preserve chart size and all values. */
+@keyframes bmwFinanceBarRise{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+@keyframes bmwFinanceChartReveal{from{opacity:0}to{opacity:1}}
+.bmw-finance-bar{transform-box:fill-box;transform-origin:center bottom;animation:bmwFinanceBarRise 650ms cubic-bezier(.22,1,.36,1) both}
+.bmw-finance-label,.bmw-finance-trend{animation:bmwFinanceChartReveal 520ms ease-out 140ms both}
+@media(prefers-reduced-motion:reduce){.bmw-finance-bar,.bmw-finance-label,.bmw-finance-trend{animation:none}}
 </style>
 <!-- REFRACTOR SECTION: Layout foundations / dashboard grid :: step1_layout_lock -->
 <style id="step1_layout_lock">
@@ -4785,7 +4801,7 @@ function bindMemberActions(){
 
   function runArrearsSms(){
     const accessMode = String(document.body.getAttribute('data-access-mode') || document.documentElement.getAttribute('data-access-mode') || '').trim();
-    if(accessMode === 'share') return;
+    // SMS composer is available in both modes; device owner confirms Send.
 
     const member = getSelectedMemberByPanel();
     if(!member){
@@ -6522,7 +6538,28 @@ document.addEventListener('DOMContentLoaded', function(){
   document.addEventListener('focusin', onFocus, true);
   document.addEventListener('focusout', onBlur, true);
 })();
-</script></head><body>
+</script><style id="bmw-mobile-layout-v1">
+/* Scoped mobile corrections; no finance/state rules. */
+#kBal,#kIn,#kOut,#kDelinq{white-space:nowrap!important;min-width:0;max-width:100%;font-variant-numeric:tabular-nums}
+#kDelinq{display:flex!important;align-items:baseline;gap:3px!important;flex-wrap:nowrap!important}
+#kDelinq>span{white-space:nowrap!important;margin-left:0!important;flex-shrink:0}
+.fee-quick-item{grid-template-columns:minmax(0,1fr) max-content!important;align-items:start}
+.fee-quick-item>span:last-child{white-space:nowrap!important;flex-shrink:0}
+#feeMemberQuickPanel .metric-msg-btn{display:inline-flex!important;visibility:visible!important;align-items:center;justify-content:center}
+#birthdayKpiCard{position:relative}
+#birthdayKpiCard .birthday-kpi-badge{cursor:pointer;touch-action:manipulation}
+.bmw-birthday-spark{position:absolute;left:50%;top:30%;width:6px;height:6px;border-radius:2px;pointer-events:none;z-index:9;animation:bmwBirthdayBurst 1100ms ease-out forwards}
+@keyframes bmwBirthdayBurst{from{opacity:1;transform:translate(0,0) rotate(0)}to{opacity:0;transform:translate(var(--spark-x),var(--spark-y)) rotate(300deg)}}
+@media(prefers-reduced-motion:reduce){.bmw-birthday-spark{animation-duration:1ms}.metric-msg-btn{animation:none!important}}
+@media(max-width:768px){
+ #dashboard .kpi{min-width:0!important;overflow:hidden;padding:14px!important}
+ #kDelinq>span:first-child{font-size:1em!important}
+ #kDelinq>span:nth-child(2){font-size:.52em!important}
+ #kDelinq>span:nth-child(3){font-size:.42em!important;letter-spacing:-.35px}
+ #feeMemberQuickPanel .fee-quick-item{display:grid!important;gap:10px}
+}
+</style>
+</head><body>
 <!-- APP SECTION: login lock screen -->
 <div class="lock" id="lock"><div class="lock-card"><div class="brand"><div class="logo" id="loginLogo" onclick="return goDashboardFromLogo(event)">BI</div><div><h2>BMW 재정 플랫폼</h2><div class="sub">BoMunWildcard · 보문고등학교 30기</div></div></div><div style="margin-top:14px"><input id="pw" placeholder="비밀번호 입력" type="password" inputmode="numeric" pattern="[0-9]*" autocomplete="off" autocapitalize="off" spellcheck="false"/></div><div class="actions" style="margin-top:12px"><button class="btn primary" id="loginBtn">접속</button></div></div></div>
 <!-- APP SECTION: main application shell -->
@@ -6552,18 +6589,21 @@ document.addEventListener('DOMContentLoaded', function(){
         <div class="fy-tab-bar compare-tab-bar">
           <button class="fy-tab active" id="compareTabRange" onclick="switchCompareTab('range')">전체/범위</button>
           <button class="fy-tab" id="compareTabAB" onclick="switchCompareTab('ab')">A/B 비교</button>
+          <button class="fy-tab" id="compareDetailToggle" type="button" onclick="toggleCompareDetail()" aria-pressed="false" title="전체 추세를 유지하며 선택한 연도의 정확한 수입·지출을 확인합니다.">상세 보기</button>
         </div>
         <div id="compareRangePanel">
-          <div style="display:flex;gap:12px;margin-top:10px;flex-wrap:wrap">
+          <div class="compare-selector-row">
             <div><div class="note">시작 연도</div><select id="compareFromYear" onchange="renderCompareChart()"></select></div>
             <div><div class="note">종료 연도</div><select id="compareToYear" onchange="renderCompareChart()"></select></div>
+            <div class="compare-meta" id="compareRangeMeta" aria-live="polite"></div>
           </div>
           <div id="compareRangeChart" style="margin-top:12px"></div>
         </div>
         <div id="compareABPanel" style="display:none">
-          <div style="display:flex;gap:12px;margin-top:10px;flex-wrap:wrap">
+          <div class="compare-selector-row">
             <div><div class="note">A 연도</div><select id="compareYearA" onchange="renderCompareChart()"></select></div>
             <div><div class="note">B 연도</div><select id="compareYearB" onchange="renderCompareChart()"></select></div>
+            <div class="compare-meta" id="compareABMeta" aria-live="polite"></div>
           </div>
           <div id="compareABChart" style="margin-top:12px"></div>
         </div>
@@ -6670,7 +6710,7 @@ document.addEventListener('DOMContentLoaded', function(){
 <div><div class="note">회계 시작월</div><div class="settings-stepper"><input id="sFrom" max="12" min="1" step="1" type="number"/><div class="settings-stepper-btns"><button class="settings-stepper-btn" data-dir="up" data-target="sFrom" type="button">▲</button><button class="settings-stepper-btn" data-dir="down" data-target="sFrom" type="button">▼</button></div></div></div>
 <div><div class="note">회계 종료월</div><div class="settings-stepper"><input id="sTo" max="12" min="1" step="1" type="number"/><div class="settings-stepper-btns"><button class="settings-stepper-btn" data-dir="up" data-target="sTo" type="button">▲</button><button class="settings-stepper-btn" data-dir="down" data-target="sTo" type="button">▼</button></div></div></div>
 <div><div class="note">월 회비 금액</div><div class="settings-stepper"><input id="sFee" min="0" step="10000" type="number"/><div class="settings-stepper-btns"><button class="settings-stepper-btn" data-dir="up" data-target="sFee" type="button">▲</button><button class="settings-stepper-btn" data-dir="down" data-target="sFee" type="button">▼</button></div></div></div>
-<div style="grid-column:1 / -1"><div class="note">현 회계연도 이월금 <span style="font-size:11px;color:#9fb0d6;font-weight:400">— 현재 활성 연도의 시작 잔액 (과거 연도 잔액은 원장 데이터로 자동 계산됩니다)</span></div><input id="sCarry" step="10000" type="number" style="max-width:200px"/></div>
+<div style="grid-column:1 / -1"><div class="note">기존 호환 이월금 <span style="font-size:11px;color:#9fb0d6;font-weight:400">— 실제 계산 기준은 회계연도별 시작잔액 잠금 또는 자동 이월값입니다.</span></div><input id="sCarry" step="10000" type="number" style="max-width:200px"/></div>
 <div><div class="note">배포 기준일</div><input id="sAsOf" readonly="" type="date"/></div>
 <div><div class="note">운영용 비밀번호</div><input disabled="" id="sAdminPw" readonly="" value="" data-admin-b64="ODgxMDEz"/></div>
 <div><div class="note">배포용 비밀번호</div><input disabled="" id="sSharePw" readonly="" value="" data-share-b64="MzAxOA=="/></div>
@@ -6883,8 +6923,9 @@ document.addEventListener('DOMContentLoaded', function(){
   </div>
 
   <div id="infoConstitutionReadCard" style="margin-top:14px">
-    <div id="infoConstitutionStickySpacer" style="display:none;height:0"></div>
-    <div id="infoConstitutionStickyAnchor"></div>
+    <!-- Protected: anchor must precede spacer; pinning must never move its own threshold. -->
+    <div id="infoConstitutionStickyAnchor" style="overflow-anchor:none"></div>
+    <div id="infoConstitutionStickySpacer" style="display:none;height:0;overflow-anchor:none"></div>
     <div id="infoConstitutionStickyFilters" style="position:sticky; top:74px; z-index:30; background:rgba(15,24,44,.98); backdrop-filter:blur(10px); padding:0 0 4px 0; margin:0 0 8px 0; border-bottom:1px solid rgba(255,255,255,.06);">
       <div id="infoConstitutionStickyInner" style="max-width:none; margin:0; padding:0;">
         <div class="actions" id="infoChapterFilterRow" style="margin-top:8px; padding-left:0;"></div>
@@ -7157,11 +7198,18 @@ function bmwFeeContext(){
  return {fy,months,cutoff:now<end?now:end,closed:now>end};
 }
 function bmwFeeMonths(row){
- const text=String(row.memo||''),out=[],ym=String(row.date).slice(0,7);let year=Number(ym.slice(0,4));
- if(/기간산입 아닌|일시금|차액/.test(text))return out;
- const range=/['’]?(\d{2,4})[.](\d{1,2})\s*[~～\-]\s*['’]?(\d{2,4})[.](\d{1,2})/.exec(text);
+ const text=String(row.memo||'').replace(/\[[^\]]*\]/g,''),out=[],ym=String(row.date).slice(0,7);let year=Number(ym.slice(0,4));
+ if(/기간산입 아닌|일시금/.test(text))return out;
+ const enrollment=/(\d{2,4})년\s*1년분\s*\+\s*(\d{2,4})년\s*(\d{1,2})개월분\[(\d{1,2})월[~～](\d{1,2})월\]/.exec(String(row.memo||''));
+ if(enrollment){
+  const fy=Number(enrollment[1])<100?2000+Number(enrollment[1]):Number(enrollment[1]),sy=Number(enrollment[2])<100?2000+Number(enrollment[2]):Number(enrollment[2]);
+  for(let i=0;i<12;i++){let n=2+i;out.push((fy+Math.floor((n-1)/12))+'-'+String((n-1)%12+1).padStart(2,'0'));}
+  for(let n=Number(enrollment[4]);n<=Number(enrollment[5]);n++)out.push(sy+'-'+String(n).padStart(2,'0'));
+  return out;
+ }
+ const range=/['’]?(\d{2,4})[.](\d{1,2})\s*[~～\-]\s*(?:['’]?(\d{2,4})[.])?(\d{1,2})/.exec(text);
  function Y(v){return Number(v)<100?2000+Number(v):Number(v);}
- if(range){let y=Y(range[1]),m=Number(range[2]),ey=Y(range[3]),em=Number(range[4]);for(let k=0;k<60&&(y<ey||(y===ey&&m<=em));k++){out.push(y+'-'+String(m).padStart(2,'0'));if(++m===13){m=1;y++;}}}
+ if(range){let y=Y(range[1]),m=Number(range[2]),ey=range[3]?Y(range[3]):Y(range[1]),em=Number(range[4]);if(!range[3]&&em<m)ey++;for(let k=0;k<60&&(y<ey||(y===ey&&m<=em));k++){out.push(y+'-'+String(m).padStart(2,'0'));if(++m===13){m=1;y++;}}}
  // A range may coexist with an additional explicitly paid month before it.
  const prefix=range?text.slice(0,range.index):text, re=/(?:(\d{2,4})\s*년\s*)?(\d{1,2})\s*월/g;let hit;
  while((hit=re.exec(prefix))){if(hit[1])year=Y(hit[1]);const m=Number(hit[2]);if(m>=1&&m<=12)out.push(year+'-'+String(m).padStart(2,'0'));}
@@ -7182,8 +7230,8 @@ function bmwFeeRecord(member){
  }
  const elapsed=ctx.months.filter(x=>x.key<=ctx.cutoff.slice(0,7)).length;
  const due=ctx.months.slice(0,elapsed),paidMonths=due.filter(x=>slots[x.key]).length,unpaidMonths=member.active?elapsed-paidMonths:0;
- const prepaidMonths=ctx.months.filter(x=>slots[x.key]&&slots[x.key].prepaid).length;
- const fee=typeof getFeeForYear==='function'?getFeeForYear(ctx.fy,state.settings.feeRules||[]):Number(state.settings.feeAmount||30000);
+ const prepaidMonths=ctx.months.filter(x=>x.key>ctx.cutoff.slice(0,7)&&slots[x.key]).length;
+ const rules=state.settings.feeRules||[],rule=rules.slice().reverse().find(x=>ctx.fy>=Number(x.fromYear)&&ctx.fy<=Number(x.toYear)); const fee=rule?Number(rule.amount):(ctx.fy<=2014?10000:ctx.fy<=2023?20000:30000);
  return {...ctx,slots,issues,paidMonths,unpaidMonths,prepaidMonths,effectivePaid:Object.keys(slots).length,ledgerMonths:Object.keys(slots).length,manualPrepayMonths:0,rate:elapsed?Math.round(100*paidMonths/elapsed):0,arrearsAmount:unpaidMonths*fee,originalArrearsAmount:0,arrearsUnits:unpaidMonths,paidAmount:Object.keys(slots).length*fee,currentYearPaidAmount:Object.keys(slots).length*fee};
 }
 
@@ -7219,49 +7267,22 @@ function ledgerRowHtml(x){
 function fillMemberList(){memberList.innerHTML=state.members.filter(m=>m.active).map(m=>`<option value="${m.name}">`).join("");}
 function fillTypeOptions(){const income=parseSettingLines(state&&state.settings?state.settings.incomeOptions:"");const expense=parseSettingLines(state&&state.settings?state.settings.expenseOptions:"");const types=lKind.value==="income"?(income.length?income:incomeTypes):(expense.length?expense:expenseTypes);const current=lType.value;lType.innerHTML=types.map(t=>`<option value="${t}">${t}</option>`).join("");if(types.includes(current))lType.value=current;else if(types.length)lType.value=types[0];}
 function renderBarChart(){
-  const data=monthlySeries();
-  const maxVal=Math.max(1,...data.flatMap(d=>[d.income,d.expense]),1);
-  const w=760,h=300,pL=40,pR=10,pT=28,pB=36,iW=w-pL-pR,iH=h-pT-pB,step=iW/Math.max(1,data.length),bw=Math.min(22,step/3);
-  let s='';
-  for(let i=0;i<5;i++){
-    const y=pT+(iH/4)*i;
-    s+=`<line x1="${pL}" y1="${y}" x2="${w-pR}" y2="${y}" stroke="rgba(255,255,255,.08)"/>`;
-  }
-  data.forEach((d,i)=>{
-    const m=d.month ?? d.m;
-    const inc=Number(d.income ?? d.inc ?? 0);
-    const exp=Number(d.expense ?? d.exp ?? 0);
-    const x=pL+i*step+step/2,hi=(inc/maxVal)*iH,he=(exp/maxVal)*iH;
-    const yIn=pT+iH-hi, yEx=pT+iH-he;
-    s+=`<rect x="${x-bw-4}" y="${pT+iH}" width="${bw}" height="0" rx="6" fill="#3b82f6">
-          <title>${m}월 수입 ${money(inc)}</title>
-          <animate attributeName="y" from="${pT+iH}" to="${yIn}" dur="0.65s" begin="0s" fill="freeze"/>
-          <animate attributeName="height" from="0" to="${hi}" dur="0.65s" begin="0s" fill="freeze"/>
-        </rect>`;
-    s+=`<rect x="${x+4}" y="${pT+iH}" width="${bw}" height="0" rx="6" fill="#f59e0b">
-          <title>${m}월 지출 ${money(exp)}</title>
-          <animate attributeName="y" from="${pT+iH}" to="${yEx}" dur="0.7s" begin="0.05s" fill="freeze"/>
-          <animate attributeName="height" from="0" to="${he}" dur="0.7s" begin="0.05s" fill="freeze"/>
-        </rect>`;
-    s+=`<text x="${x}" y="${h-8}" text-anchor="middle">${m}월</text>`;
-    if(inc>0){
-      const labelY = hi > 24 ? (yIn+16) : Math.max(18, yIn-6);
-      const fill = hi > 24 ? '#eef4ff' : '#c7d4f4';
-      s+=`<text x="${x-bw/2-4}" y="${labelY}" text-anchor="middle" fill="${fill}" opacity="0">
-            ${fmtKor(inc)}
-            <animate attributeName="opacity" from="0" to="1" dur="0.2s" begin="0.45s" fill="freeze"/>
-          </text>`;
-    }
-    if(exp>0){
-      const labelY = he > 24 ? (yEx+16) : Math.max(18, yEx-6);
-      const fill = he > 24 ? '#fff7ed' : '#c7d4f4';
-      s+=`<text x="${x+bw/2+4}" y="${labelY}" text-anchor="middle" fill="${fill}" opacity="0">
-            ${fmtKor(exp)}
-            <animate attributeName="opacity" from="0" to="1" dur="0.2s" begin="0.5s" fill="freeze"/>
-          </text>`;
-    }
-  });
-  barChart.innerHTML=`<svg viewBox="0 0 ${w} ${h}">${s}</svg>`;
+ const data=monthlySeries();if(!barChart)return;
+ const w=760,h=300,L=44,R=14,T=32,B=30,PW=w-L-R,PH=h-T-B,step=PW/Math.max(1,data.length),bw=Math.min(22,step/3);
+ const maxValue=Math.max(1,...data.flatMap(d=>[Number(d.income||0),Number(d.expense||0)])),scale=Math.pow(10,Math.floor(Math.log10(maxValue))),max=Math.ceil(maxValue/scale)*scale;
+ const inc=data.reduce((s,d)=>s+Number(d.income||0),0),exp=data.reduce((s,d)=>s+Number(d.expense||0),0),net=Math.round(inc-exp);
+ const y=v=>T+PH-Number(v||0)/max*PH,fmt=v=>v>=10000?(v/10000).toFixed(v%10000?1:0)+'만':Math.round(v).toLocaleString('ko-KR');let grid='',bars='',lines='';
+ for(let i=0;i<=4;i++){let v=max*i/4,yy=y(v);grid+=`<line x1="${L}" x2="${w-R}" y1="${yy}" y2="${yy}" stroke="#7284a4" stroke-opacity=".2" stroke-dasharray="3 5"/><text x="${L-7}" y="${yy+3}" text-anchor="end" style="fill:#94a3b8!important;font-size:10px">${fmt(v)}</text>`;}
+ data.forEach((d,i)=>{let x=L+step*(i+.5),month=d.month??d.m;
+  ['income','expense'].forEach((key,j)=>{let value=Math.round(Number(d[key]||0)),bx=x+(j?4:-bw-4),yy=y(value),color=j?'#f59e0b':'#3b82f6';bars+=`<rect class="bmw-finance-bar" x="${bx}" y="${yy}" width="${bw}" height="${T+PH-yy}" rx="4" style="fill:${color}!important;animation-delay:${Math.min(i*22+j*30,220)}ms"><title>${month}월 ${j?'지출':'수입'} ${money(value)}원 · 순증감 ${money(Number(d.income||0)-Number(d.expense||0))}원</title></rect>`;
+   if(value>0)bars+=`<text class="bmw-finance-label" x="${bx+bw/2}" y="${Math.max(14,yy-7)}" text-anchor="middle" style="fill:${j?'#fde68a':'#bfdbfe'}!important;font-size:9px">${fmt(value)}</text>`;
+  });bars+=`<text x="${x}" y="${h-8}" text-anchor="middle" style="fill:#cbd5e1!important;font-size:10px">${month}월</text>`;
+ });
+ ['income','expense'].forEach((key,j)=>{const pts=data.map((d,i)=>(L+step*(i+.5)+(j?bw/2+4:-bw/2-4))+','+y(d[key])).join(' '),color=j?'#fcd34d':'#93c5fd';lines+=`<polyline class="bmw-finance-trend" points="${pts}" stroke="${color}" stroke-width="1.15" stroke-opacity="0.65" stroke-dasharray="5 5" style="fill:none!important;pointer-events:none"/>`;data.forEach((d,i)=>{let x=L+step*(i+.5)+(j?bw/2+4:-bw/2-4);lines+=`<circle class="bmw-finance-trend" cx="${x}" cy="${y(d[key])}" r="2" fill="${color}" fill-opacity="0.75"><title>${d.month??d.m}월 ${j?'지출':'수입'} ${money(d[key]||0)}원</title></circle>`;});});
+ // Display-only checkpoints use exactly the series drawn below; no extrapolation or carryover.
+ const peakMonth=key=>{const v=Math.max(0,...data.map(d=>Number(d[key]||0)));if(!v)return '없음';const rows=data.filter(d=>Number(d[key]||0)===v);return (rows[0].month??rows[0].m)+'월'+(rows.length>1?' 외':'');};
+ const checkpoint='최고 수입 '+peakMonth('income')+' · 지출 '+peakMonth('expense');
+ barChart.innerHTML=`<div style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:3px 8px;align-items:center;margin:0 0 5px;font-size:11px;line-height:1.5;color:#94a3b8"><span title="점선: 월별 실적 추이. 동일 최고액 월이 여러 개면 첫 월과 외로 표시합니다.">${checkpoint}</span><span style="white-space:nowrap;color:${net>=0?'#6ee7b7':'#fca5a5'}" title="현재 회계연도 그래프 전체의 수입 ${money(inc)}원 − 지출 ${money(exp)}원. 이월금 제외, 기록된 거래 기준입니다.">수입−지출 ${net>0?'+':''}${money(net)}원</span></div><svg viewBox="0 0 ${w} ${h}" preserveAspectRatio="xMidYMid meet" role="img" aria-label="월별 수입 지출 및 추이" style="width:100%;display:block">${grid}${bars}${lines}</svg>`;
 }
 function renderDonut(month="all"){
   const grp = donutData(month);
@@ -7475,7 +7496,7 @@ function renderFeeStatus(){
   try{ syncFeeHeatmapLayout(); }catch(e){}
   bindFeeHeatmapScrollTracker();
   scrollFeeHeatmapToCurrentMonth(asMonth);
-  if(typeof renderFeeQuickPanel === 'function') renderFeeQuickPanel(window.feeSelectedMemberName || '');
+  if(typeof renderFeeQuickPanel === 'function') renderFeeQuickPanel(window.feeSelectedMemberName || '',{focus:false});
 }
 
 function renderDashMonthButtons(){
@@ -7622,7 +7643,7 @@ activeMembers.forEach(m=>{
   const status=memberStatus(m);
   // KPI "미납 현황"의 건수는 회원회비현황 heatmap에 보이는 당해연도 미납 칸 수와 동일 기준으로 계산한다.
   // 전년도 미수금(arrears)은 금액에는 포함하되, 건수에는 중복 가산하지 않는다.
-  unpaid += Number(status.unpaidMonths||0) * feeAmount + Number(status.arrearsAmount||0);
+  unpaid += Number(status.arrearsAmount||0); // Selected-FY remaining amount; no duplicate addition.
   delinquentCases += Number(status.unpaidMonths||0);
 });
 kDelinq.dataset.targetCount=String(Number(delinquentCases||0));
@@ -13351,7 +13372,7 @@ color:#60a5fa;
     }, 30);
   }
 
-  window.hideFeeQuickPanel = function(){
+  window.hideFeeQuickPanel = function(options){
     const panel = document.getElementById('feeMemberQuickPanel');
     const card = document.getElementById('feeStatusCard');
     const search = document.getElementById('ledgerSearch');
@@ -13362,11 +13383,11 @@ color:#60a5fa;
       panel.innerHTML = '<div class="fee-quick-empty">회원명을 누르면 상세가 열리고, 월 셀을 누르면 원장 거래내역으로 바로 연결됩니다.</div>';
       panel.style.display = 'none';
     }
-    if(card){ scrollSectionStart(card); }
+    if(card&&(!options||options.focus!==false)){ scrollSectionStart(card); }
     window.feeSelectedMemberName = '';
   };
 
-  window.renderFeeQuickPanel = function(name){
+  window.renderFeeQuickPanel = function(name,options){
     const panel = document.getElementById('feeMemberQuickPanel');
     const card = document.getElementById('feeStatusCard');
     if(!panel) return;
@@ -13395,8 +13416,8 @@ color:#60a5fa;
       <div class="fee-quick-grid">
         <div class="fee-quick-metric ${Number(status.unpaidMonths||0) > 0 ? "is-unpaid" : ""}">${Number(status.unpaidMonths||0) > 0 ? `<button class="metric-msg-btn" type="button" data-msg-member="${member.id}" aria-label="미납 안내 문자">✉️</button>` : ``}<div class="k">미납</div><div class="v">${Number(status.unpaidMonths||0)}개월</div></div>
         <div class="fee-quick-metric"><div class="k">잔여 미수금</div><div class="v">${money(status.arrearsAmount||0)}원</div></div>
-        <div class="fee-quick-metric"><div class="k">당해연도 납부</div><div class="v">${Number(status.paidMonths||0)}개월</div></div>
-        <div class="fee-quick-metric ${Number(status.prepaidMonths||0) > 0 ? "is-prepaid" : ""}"><div class="k">선납</div><div class="v">${Number(status.prepaidMonths||0)}개월</div></div>
+        <div class="fee-quick-metric"><div class="k" title="선택 회계연도에서 경과한 월 중 납부가 인정된 개월">당해연도 납부</div><div class="v">${Number(status.paidMonths||0)}개월</div></div>
+        <div class="fee-quick-metric ${Number(status.prepaidMonths||0) > 0 ? "is-prepaid" : ""}"><div class="k" title="선택 회계연도의 아직 도래하지 않은 월 중 납부가 인정된 개월">잔여월 선납</div><div class="v">${Number(status.prepaidMonths||0)}개월</div></div>
       </div>
       <div class="small" style="margin-top:10px">최근 내역</div>
       <div class="fee-quick-history">${history}</div>
@@ -13405,7 +13426,8 @@ color:#60a5fa;
     if(btn){ btn.onclick = function(){ openLedgerForFeeMember(member.name, 'all', {resetSearch:false, focusLedger:true}); }; }
     const closeBtn = document.getElementById('feeQuickClose');
     if(closeBtn){ closeBtn.onclick = function(){ window.hideFeeQuickPanel(); }; }
-    if(card){ scrollSectionStart(panel); }
+    if(typeof bindMemberActions==='function') bindMemberActions();
+    if(card&&(!options||options.focus!==false)){ scrollSectionStart(panel); }
   };
 
   document.addEventListener('click', function(e){
@@ -13427,27 +13449,21 @@ color:#60a5fa;
 <!-- REFACTOR SECTION: Nav/reset polish :: step44-nav-reset-polish -->
 <script id="step44-nav-reset-polish">
 (function(){
+window.bmwHeaderInset = function bmwHeaderInset(){
+ var bar=document.querySelector('.topbar');if(!bar)return 0;
+ return Math.ceil(bar.getBoundingClientRect().height)+(parseFloat(getComputedStyle(bar).top)||0);
+};
   window.scrollSectionStart = function(el, mode){
-  if(!el) return;
-  var target = el;
-  var topbar = document.querySelector('.topbar');
-  var topbarH = topbar ? Math.ceil(topbar.getBoundingClientRect().height || 0) : 0;
-  var cardOffset = topbarH + 8;
-  var y = 0;
-
-  if(target.classList && target.classList.contains('page')){
-    if(mode === 'page-top'){
-      y = 0;
-    } else {
-      var firstCard = target.querySelector('.card');
-      if(firstCard) target = firstCard;
-      y = Math.max(0, target.getBoundingClientRect().top + window.pageYOffset - cardOffset);
-    }
-  } else {
-    y = Math.max(0, target.getBoundingClientRect().top + window.pageYOffset - cardOffset);
-  }
-
-  window.scrollTo({top:y, behavior:'smooth'});
+ if(!el)return;
+ if(mode==='page-top'&&Date.now()<(window.__bmwFocusScrollUntil||0))return;
+ if(mode!=='page-top')window.__bmwFocusScrollUntil=Date.now()+500;
+ var target=el,seq=window.__bmwScrollSequence=(window.__bmwScrollSequence||0)+1;
+ if(target.classList&&target.classList.contains('page')&&mode!=='page-top')target=target.querySelector('.card')||target;
+ requestAnimationFrame(function(){requestAnimationFrame(function(){
+  if(seq!==window.__bmwScrollSequence||!target.isConnected)return;
+  var y=mode==='page-top'?0:Math.max(0,window.scrollY+target.getBoundingClientRect().top-bmwHeaderInset());
+  window.scrollTo({top:y,behavior:'smooth'});
+ });});
 };
 })();
 </script>
@@ -13481,7 +13497,7 @@ color:#60a5fa;
     safeCall(function(){ if(typeof renderDashMonthButtons === 'function') renderDashMonthButtons(); });
     safeCall(function(){ if(typeof renderOverview === 'function') renderOverview(); });
     safeCall(function(){ if(typeof renderDashTable === 'function') renderDashTable(); });
-    safeCall(function(){ if(typeof hideFeeQuickPanel === 'function') hideFeeQuickPanel(); });
+    safeCall(function(){ if(typeof hideFeeQuickPanel === 'function') hideFeeQuickPanel({focus:false}); });
     var panel = document.getElementById('feeMemberQuickPanel');
     if(panel){
       panel.innerHTML = '<div class="fee-quick-empty">회원명을 누르면 상세가 열리고, 월 셀을 누르면 원장 거래내역으로 바로 연결됩니다.</div>';
@@ -15094,6 +15110,7 @@ html,body{scrollbar-width:auto;}
     var targetMonth = (ctx.month === 'all' || ctx.month === undefined || ctx.month === null || ctx.month === '') ? 'all' : Number(ctx.month);
     try{ dashSelectedMonth = targetMonth; }catch(e){}
     try{ window.dashSelectedMonth = targetMonth; }catch(e){}
+    if(typeof window.bmwSetInquiryMonth==='function') window.bmwSetInquiryMonth(targetMonth);
     if(typeof renderDashMonthButtons === 'function') renderDashMonthButtons();
     if(typeof renderDashTable === 'function') renderDashTable();
     setDashLedgerContextUi(window.__dashLedgerContext);
@@ -16375,7 +16392,7 @@ function applyEntryEmojiToMemo(kind, entryType, memo){
         var el = document.getElementById(window.infoSelectedChapter);
         scrollToElementWithOffset(el || document.getElementById('infoConstitutionReadCard'), extra);
       }else{
-        scrollToElementWithOffset(document.getElementById('infoConstitutionReadCard'), extra);
+        scrollToElementWithOffset(document.getElementById(window.infoSelectedChapter)||document.querySelector('#infoConstitutionReadView .mi-const-article[id]')||document.getElementById('infoConstitutionReadCard'), 0);
       }
       setTimeout(setConstitutionActiveButtons, 80);
     }, 20);
@@ -16696,7 +16713,7 @@ function applyEntryEmojiToMemo(kind, entryType, memo){
   }
   function getTopbarHeight(){
     var topbar = document.querySelector('.topbar');
-    return topbar ? Math.ceil(topbar.getBoundingClientRect().height) : 62;
+    return typeof bmwHeaderInset==='function'?bmwHeaderInset():(topbar?Math.ceil(topbar.getBoundingClientRect().height):0);
   }
   function getStickyPortal(){
     return document.getElementById('infoConstitutionStickyPortal');
@@ -16708,10 +16725,30 @@ function applyEntryEmojiToMemo(kind, entryType, memo){
     return h + sh + (extra || 4);
   }
   function scrollToElementWithOffset(el, extra){
-    if(!el) return;
-    var rect = el.getBoundingClientRect();
-    var y = window.pageYOffset + rect.top - getStickyOffset(extra);
-    smoothScrollToY(y);
+    if(!el)return;
+    var seq=window.__constitutionNavSequence=(window.__constitutionNavSequence||0)+1;
+    requestAnimationFrame(function(){requestAnimationFrame(function(){
+      if(seq!==window.__constitutionNavSequence||!el.isConnected)return;
+      // Protected: animate one navigation only; retain menu/filter offsets throughout pinning.
+      var duration=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches?0:440;
+      window.__constitutionManualLockUntil=Date.now()+duration+600;
+      var startY=window.scrollY,startTime=null;
+      function frame(now){
+        if(seq!==window.__constitutionNavSequence||!el.isConnected)return;
+        if(startTime===null)startTime=now;
+        updateMobileStickyFilters();
+        var filters=document.getElementById('infoConstitutionStickyFilters');
+        var portal=getStickyPortal();
+        var height=portal&&portal.style.display!=='none'?portal.getBoundingClientRect().height:(filters?filters.getBoundingClientRect().height:0);
+        var target=Math.max(0,window.scrollY+el.getBoundingClientRect().top-getTopbarHeight()-height-(extra||4));
+        var progress=duration?Math.min(1,(now-startTime)/duration):1;
+        var eased=1-Math.pow(1-progress,3);
+        window.scrollTo({top:startY+(target-startY)*eased,behavior:'instant'});
+        if(progress<1)requestAnimationFrame(frame);
+        else updateMobileStickyFilters();
+      }
+      requestAnimationFrame(frame);
+    });});
   }
   function hideHorizontalScrollbar(row){
     if(!row) return;
@@ -16766,66 +16803,24 @@ function applyEntryEmojiToMemo(kind, entryType, memo){
     applyActiveAndScroll(document.getElementById('infoArticleFilterRow'), window.infoSelectedArticle, 'article');
   }
   function updateMobileStickyFilters(){
-    var sticky = document.getElementById('infoConstitutionStickyFilters');
-    var spacer = document.getElementById('infoConstitutionStickySpacer');
-    var anchor = document.getElementById('infoConstitutionStickyAnchor');
-    var page = document.getElementById('infoConstitution');
-    if(!sticky || !spacer || !anchor || !page) return;
-
-    var portal = ensureStickyPortal();
-    var isMobile = window.matchMedia('(max-width: 768px)').matches;
-    var top = getTopbarHeight() + 8;
-
-    if(page.classList.contains('active') && window.infoConstitutionMode === 'view' && isMobile){
-      if(sticky.parentElement !== portal){
-        portal.appendChild(sticky);
-      }
-      portal.style.display = 'block';
-      portal.style.top = (top) + "px";
-      portal.style.padding = '0';
-      portal.style.maxWidth = '1480px';
-      portal.style.margin = '0 auto';
-      sticky.style.position = 'static';
-      sticky.style.top = '';
-      sticky.style.margin = '0';
-      sticky.style.borderBottom = 'none';
-
-      var card = document.querySelector('#infoConstitution .card');
-      var padL = 10, padR = 10;
-      if(card){
-        var cs = window.getComputedStyle(card);
-        padL = parseFloat(cs.paddingLeft || '10') || 10;
-        padR = parseFloat(cs.paddingRight || '10') || 10;
-      }
-      var inner = document.getElementById('infoConstitutionStickyInner');
-      if(inner){
-        inner.style.padding = '8px ' + padR + 'px 10px ' + padL + 'px';
-      }
-      spacer.style.display = '';
-      spacer.style.height = (portal.offsetHeight || sticky.offsetHeight || 88) + 'px';
-    }else{
-      if(sticky.parentElement !== anchor.parentElement){
-        anchor.parentElement.insertBefore(sticky, anchor.nextSibling);
-      }
-      portal.style.display = 'none';
-      sticky.style.position = 'sticky';
-      sticky.style.top = (top) + "px";
-      sticky.style.left = '';
-      sticky.style.right = '';
-      sticky.style.zIndex = '30';
-      sticky.style.margin = '0 0 8px 0';
-      sticky.style.borderBottom = '1px solid rgba(255,255,255,.06)';
-      var inner2 = document.getElementById('infoConstitutionStickyInner');
-      if(inner2){
-        inner2.style.padding = '0';
-      }
-      spacer.style.display = 'none';
-      spacer.style.height = '0';
-    }
-
-    hideHorizontalScrollbar(document.getElementById('infoChapterFilterRow'));
-    hideHorizontalScrollbar(document.getElementById('infoArticleFilterRow'));
-  }
+ var filters=document.getElementById('infoConstitutionStickyFilters'),spacer=document.getElementById('infoConstitutionStickySpacer'),anchor=document.getElementById('infoConstitutionStickyAnchor'),page=document.getElementById('infoConstitution');
+ if(!filters||!spacer||!anchor||!page)return;
+ var portal=ensureStickyPortal(),top=getTopbarHeight(),card=page.querySelector('.card');
+ var show=page.classList.contains('active')&&window.infoConstitutionMode==='view'&&anchor.getBoundingClientRect().top<=top;
+ if(show&&card){
+  var bounds=card.getBoundingClientRect();if(filters.parentElement!==portal)portal.appendChild(filters);
+  Object.assign(portal.style,{display:'block',position:'fixed',top:top+'px',left:bounds.left+'px',right:'auto',width:bounds.width+'px',maxWidth:'none',margin:'0',padding:'0',zIndex:'900'});
+  Object.assign(filters.style,{position:'static',top:'',margin:'0',borderBottom:'none'});
+  var inner=document.getElementById('infoConstitutionStickyInner');if(inner)inner.style.padding='8px 12px';
+  spacer.style.display='block';spacer.style.height=(portal.offsetHeight+8)+'px';
+ }else{
+  if(filters.parentElement!==anchor.parentElement)anchor.parentElement.insertBefore(filters,anchor.nextSibling);
+  portal.style.display='none';Object.assign(filters.style,{position:'static',top:'auto',margin:'0 0 8px 0'});
+  var inner=document.getElementById('infoConstitutionStickyInner');if(inner)inner.style.padding='8px 12px';
+  spacer.style.display='none';spacer.style.height='0';
+ }
+ hideHorizontalScrollbar(document.getElementById('infoChapterFilterRow'));hideHorizontalScrollbar(document.getElementById('infoArticleFilterRow'));
+ }
   function applyConstitutionMode(mode){
     window.infoConstitutionMode = (mode === 'edit') ? 'edit' : 'view';
     var read = document.getElementById('infoConstitutionReadCard');
@@ -16871,7 +16866,7 @@ function applyEntryEmojiToMemo(kind, entryType, memo){
         var el = document.getElementById(window.infoSelectedChapter);
         scrollToElementWithOffset(el || document.getElementById('infoConstitutionReadCard'), 0);
       }else{
-        scrollToElementWithOffset(document.getElementById('infoConstitutionReadCard'), 0);
+        scrollToElementWithOffset(document.querySelector('#infoConstitutionReadView .mi-const-chapter[id]')||document.getElementById('infoConstitutionReadCard'), 0);
       }
       setTimeout(setConstitutionActiveButtons, 80);
     }, 20);
@@ -16884,14 +16879,14 @@ function applyEntryEmojiToMemo(kind, entryType, memo){
     applyConstitutionMode('view');
     setTimeout(function(){
       var isMobile = window.matchMedia && window.matchMedia('(max-width: 768px)').matches;
-      var extra = isMobile ? 0 : 96;
+      var extra = 0;
       if(window.infoSelectedArticle !== 'all'){
         var el = document.getElementById(window.infoSelectedArticle);
         var chapterEl = el ? el.closest('.mi-const-chapter[id]') : null;
         if(chapterEl && chapterEl.id) window.infoSelectedChapter = chapterEl.id;
         scrollToElementWithOffset(el || document.getElementById('infoConstitutionReadCard'), extra);
       }else{
-        scrollToElementWithOffset(document.getElementById('infoConstitutionReadCard'), extra);
+        scrollToElementWithOffset(document.getElementById(window.infoSelectedChapter)||document.querySelector('#infoConstitutionReadView .mi-const-article[id]')||document.getElementById('infoConstitutionReadCard'), 0);
       }
       setTimeout(setConstitutionActiveButtons, 80);
     }, 20);
@@ -16905,6 +16900,7 @@ function applyEntryEmojiToMemo(kind, entryType, memo){
       var page = document.getElementById('infoConstitution');
       if(!page || !page.classList.contains('active')) return;
       if(window.infoConstitutionMode === 'edit') return;
+      updateMobileStickyFilters();
       if(autoSyncLocked()) return;
 
       var isMobile = window.matchMedia && window.matchMedia('(max-width: 768px)').matches;
@@ -17368,20 +17364,38 @@ function initYearCompareCard(){
     if(!open){ if(!toggle.__compareSelectionReady){ initCompareSelects(); toggle.__compareSelectionReady=true; } renderCompareChart(); }
   };
   toggle.addEventListener('click',toggle.__fyCompareHandler);
-  // Preserve comparison selections on collapse; outside pointer works for touch and mouse.
-  if(!toggle.__compareOutsideHandler){
-    toggle.__compareOutsideHandler=function(e){
-      var card=document.getElementById('yearCompareCard');
-      if(card && !card.contains(e.target) && body.style.display!=='none'){
-        body.style.display='none'; if(icon) icon.textContent='▼';
-      }
-    };
-    document.addEventListener('pointerdown',toggle.__compareOutsideHandler,true);
-  }
+  // Manual open/close only; comparison selections persist.
 }
 
 /* ── 비교 차트 ── */
 var __cmpMode='range';
+var __cmpDetailed=false;
+var __cmpSelectedYear=null;
+function compareYearReadout(year){
+ var t=getYearTotals(year),net=Math.round(t.income-t.expense);
+ function value(label,n,color){return '<div><span>'+label+'</span><strong style="color:'+color+'">'+Math.round(n).toLocaleString('ko-KR')+'원</strong></div>';}
+ return value('수입',t.income,'#93c5fd')+value('지출',t.expense,'#fbbf24')+value('수입−지출',net,net<0?'#fca5a5':'#6ee7b7');
+}
+function selectCompareYear(year){
+ __cmpSelectedYear=Number(year);
+ var host=document.getElementById(__cmpMode==='range'?'compareRangeChart':'compareABChart');
+ if(!host)return;
+ var readout=host.querySelector('.compare-year-readout'),select=host.querySelector('.compare-inspect-year');
+ if(readout)readout.innerHTML=compareYearReadout(__cmpSelectedYear);
+ if(select)select.value=String(__cmpSelectedYear);
+ host.querySelectorAll('[data-compare-year]').forEach(function(node){
+  var active=Number(node.getAttribute('data-compare-year'))===__cmpSelectedYear;
+  node.setAttribute('aria-pressed',String(active));
+  var focus=node.querySelector('.compare-year-focus');if(focus)focus.setAttribute('fill-opacity',active?'.12':'0');
+ });
+}
+
+function toggleCompareDetail(){
+ __cmpDetailed=!__cmpDetailed;
+ var btn=document.getElementById('compareDetailToggle');
+ if(btn){btn.textContent=__cmpDetailed?'전체 보기':'상세 보기';btn.setAttribute('aria-pressed',String(__cmpDetailed));btn.classList.toggle('active',__cmpDetailed);}
+ renderCompareChart();
+}
 function switchCompareTab(mode){
   __cmpMode=mode;
   var rBtn=document.getElementById('compareTabRange');
@@ -17424,35 +17438,49 @@ function getYearTotals(fy){
   return {income:inc,expense:exp};
 }
 function buildBarSVG(years){
-  if(!years.length) return '<p style="opacity:.6;padding:12px">데이터가 없습니다.</p>';
-  var data=years.map(function(y){var t=getYearTotals(y);return {year:y,income:t.income,expense:t.expense};});
-  var peak=Math.max(1,Math.max.apply(null,data.map(function(d){return Math.max(d.income,d.expense);}))), step=Math.pow(10,Math.floor(Math.log10(peak))), max=Math.ceil(peak/step)*step;
-  var L=54,T=26,H=260,B=32,PH=H-T-B,G=94,BAR=25,GAP=7,W=L+data.length*G+12;
-  function yy(v){return T+PH-(v/max)*PH;}
-  function label(v){return v>=10000?Math.round(v/10000)+'만':String(v);}
-  var grid='', bars='', lines='';
-  for(var k=0;k<=4;k++){
-    var v=max*k/4,y=yy(v);
-    grid+='<line x1="'+L+'" x2="'+(W-12)+'" y1="'+y+'" y2="'+y+'" stroke="#7184a7" stroke-opacity=".22" stroke-dasharray="3 5"/>'+
-      '<text x="'+(L-9)+'" y="'+(y+4)+'" text-anchor="end" style="fill:#94a3b8!important;font-size:10px">'+label(v)+'</text>';
-  }
-  data.forEach(function(d,i){
-    var x=L+i*G+12;
-    ['income','expense'].forEach(function(key,j){var value=d[key],bx=x+j*(BAR+GAP),y=yy(value),color=j?'#f59e0b':'#3b82f6';
-      bars+='<rect x="'+bx+'" y="'+y+'" width="'+BAR+'" height="'+Math.max(0,H-B-y)+'" rx="4" style="fill:'+color+'!important"><title>'+d.year+' '+(j?'지출':'수입')+' '+value.toLocaleString('ko-KR')+'원</title></rect>'+
-        '<text x="'+(bx+BAR/2)+'" y="'+(y-9)+'" text-anchor="middle" style="fill:'+(j?'#fde68a':'#bfdbfe')+'!important;font-size:10px">'+label(value)+'</text>';
-    });
-    bars+='<text x="'+(x+BAR+GAP/2)+'" y="'+(H-9)+'" text-anchor="middle" style="fill:#cbd5e1!important;font-size:11px">'+d.year+'</text>';
+ if(!years.length)return '<p>데이터가 없습니다.</p>';
+ var host=document.getElementById(__cmpMode==='range'?'compareRangeChart':'compareABChart');
+ var detailed=typeof __cmpDetailed!=='undefined'&&__cmpDetailed;
+ var W=Math.max(240,Math.round(host&&host.clientWidth||560)),H=220,L=42,T=24,B=28,PH=H-T-B;
+ var selectedYear=typeof __cmpSelectedYear!=='undefined'&&years.indexOf(__cmpSelectedYear)>=0?__cmpSelectedYear:years[0];
+ if(detailed)__cmpSelectedYear=selectedYear;
+ var data=years.map(function(y){var t=getYearTotals(y);return {year:y,income:t.income,expense:t.expense};});
+ var peak=Math.max(1,Math.max.apply(null,data.map(function(d){return Math.max(d.income,d.expense);}))),step=Math.pow(10,Math.floor(Math.log10(peak))),max=Math.ceil(peak/step)*step;
+ var G=(W-L-10)/data.length,BAR=Math.max(3,Math.min(24,(G-8)/2)),GAP=Math.min(7,G/8),grid='',bars='',lines='';
+ function yy(v){return T+PH-v/max*PH;}function label(v){return v>=10000?Math.round(v/10000)+'만':Math.round(v).toLocaleString('ko-KR');}
+ function text(x,y,str,color,size,anchor){return '<text class="bmw-finance-label" x="'+x+'" y="'+y+'" text-anchor="'+(anchor||'middle')+'" style="fill:'+color+'!important;font-size:'+size+'px">'+str+'</text>';}
+ for(var k=0;k<=4;k++){var v=max*k/4,y=yy(v);grid+='<line x1="'+L+'" x2="'+(W-8)+'" y1="'+y+'" y2="'+y+'" stroke="#7184a7" stroke-opacity=".24" stroke-dasharray="3 5"/>'+text(L-6,y+3,label(v),'#94a3b8',9,'end');}
+ data.forEach(function(d,i){var center=L+G*(i+.5),x=center-BAR-GAP/2;
+  if(detailed)bars+='<g data-compare-year="'+d.year+'" role="button" tabindex="0" aria-label="'+d.year+'년 상세 금액" aria-pressed="'+(d.year===selectedYear)+'" onclick="selectCompareYear('+d.year+')" onkeydown="if(event.keyCode===13||event.keyCode===32){event.preventDefault();selectCompareYear('+d.year+');}" style="cursor:pointer"><rect class="compare-year-focus" x="'+(L+G*i)+'" y="'+(T-10)+'" width="'+G+'" height="'+(H-T+10)+'" rx="4" fill="#93c5fd" fill-opacity="'+(d.year===selectedYear?'.12':'0')+'"/>';
+
+  ['income','expense'].forEach(function(key,j){var bx=x+j*(BAR+GAP),y=yy(d[key]),color=j?'#f59e0b':'#3b82f6';
+   bars+='<rect class="bmw-finance-bar" x="'+bx+'" y="'+y+'" width="'+BAR+'" height="'+(H-B-y)+'" rx="3" style="fill:'+color+'!important;animation-delay:'+Math.min(i*22+j*30,220)+'ms"><title>'+d.year+' '+(j?'지출':'수입')+' '+Math.round(d[key]).toLocaleString('ko-KR')+'원</title></rect>';
+   if(G>=42)bars+=text(bx+BAR/2,y-7,label(d[key]),j?'#fde68a':'#bfdbfe',G<65?8:10);
   });
-  if(data.length>1){['income','expense'].forEach(function(key,j){
-    var pts=data.map(function(d,i){return (L+i*G+12+j*(BAR+GAP)+BAR/2)+','+yy(d[key]);}).join(' ');
-    lines+='<polyline points="'+pts+'" fill="none" stroke="'+(j?'#fcd34d':'#93c5fd')+'" stroke-width="1.5" stroke-opacity=".8" stroke-dasharray="4 5" style="fill:none!important;pointer-events:none"/>';
-  });}
-  return '<div style="display:flex;gap:20px;align-items:center;margin:16px 0 22px 4px;font-size:12px;color:#cbd5e1">'+
-    '<span style="display:inline-flex;align-items:center;gap:7px"><i style="display:inline-block;width:10px;height:10px;border-radius:3px;background:#3b82f6"></i>수입</span>'+
-    '<span style="display:inline-flex;align-items:center;gap:7px"><i style="display:inline-block;width:10px;height:10px;border-radius:3px;background:#f59e0b"></i>지출</span>'+
-    '<span style="font-size:11px;color:#94a3b8">점선: 연도별 추이 · 단위: 원</span></div>'+
-    '<svg xmlns="http://www.w3.org/2000/svg" width="'+W+'" height="'+H+'" role="img" aria-label="연도별 수입 지출 비교 및 추이" style="display:block;flex-shrink:0">'+grid+bars+lines+'</svg>';
+  bars+=text(center,H-8,G<38?"'"+String(d.year).slice(2):d.year,'#cbd5e1',G<38?8:10);
+  if(detailed)bars+='</g>';
+ });
+ if(data.length>1)['income','expense'].forEach(function(key,j){var pts=data.map(function(d,i){return (L+G*(i+.5)+(j?1:-1)*(BAR+GAP)/2)+','+yy(d[key]);}).join(' ');lines+='<polyline class="bmw-finance-trend" points="'+pts+'" fill="none" stroke="'+(j?'#fcd34d':'#93c5fd')+'" stroke-width="1.05" stroke-opacity="0.65" stroke-dasharray="4 5" style="fill:none!important;pointer-events:none"/>';});
+ // Compare only displayed recorded totals. A/B is explicitly A minus B, never a forecast.
+ function compactDelta(v){return (v>0?'+':v<0?'−':'')+(Math.abs(v)>=10000?(Math.abs(v)/10000).toFixed(1).replace(/\.0$/,'')+'만':Math.round(Math.abs(v)).toLocaleString('ko-KR')+'원');}
+ function peakYear(key){var v=Math.max.apply(null,data.map(function(d){return Number(d[key]||0);}));if(v<=0)return '없음';var rows=data.filter(function(d){return Number(d[key]||0)===v;});return rows[0].year+'년'+(rows.length>1?' 외':'');}
+ var insight,detail;
+ if(__cmpMode==='ab'&&data.length===2){
+  var di=data[0].income-data[1].income,de=data[0].expense-data[1].expense;
+  insight='A−B 수입 '+compactDelta(di)+' · 지출 '+compactDelta(de);
+  detail='A('+data[0].year+') − B('+data[1].year+'): 수입 '+Math.round(di).toLocaleString('ko-KR')+'원, 지출 '+Math.round(de).toLocaleString('ko-KR')+'원. 기록된 누적 실적 비교이며, 진행 중 연도는 연간 확정치가 아닙니다.';
+ }else{
+  insight='최고 수입 '+peakYear('income')+' · 지출 '+peakYear('expense');
+  detail='조회 범위의 기록된 누적 실적 기준 최고액 연도입니다. 동률은 첫 연도와 외로 표시합니다. 진행 중 연도는 연간 확정치가 아닙니다. 점선은 표시된 연도별 실적 추이입니다.';
+ }
+ var meta=document.getElementById(__cmpMode==='range'?'compareRangeMeta':'compareABMeta');
+ if(meta)meta.innerHTML='<div class="compare-meta-legend"><span><i style="display:inline-block;width:9px;height:9px;border-radius:2px;background:#3b82f6;margin-right:5px"></i>수입</span><span><i style="display:inline-block;width:9px;height:9px;border-radius:2px;background:#f59e0b;margin-right:5px"></i>지출</span></div><div class="compare-meta-summary" title="'+detail+'">'+insight+'</div>';
+ var inspector='';
+ if(detailed){
+  var unique=years.filter(function(y,i){return years.indexOf(y)===i;});
+  inspector='<div class="compare-inspector"><select class="compare-inspect-year" aria-label="상세 조회 연도" onchange="selectCompareYear(Number(this.value))">'+unique.map(function(y){return '<option value="'+y+'"'+(y===selectedYear?' selected':'')+'>'+y+'년</option>';}).join('')+'</select><div class="compare-year-readout" aria-live="polite">'+compareYearReadout(selectedYear)+'</div></div>';
+ }
+ return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 '+W+' '+H+'" width="100%" height="'+H+'" preserveAspectRatio="xMidYMid meet" role="'+(detailed?'group':'img')+'" aria-label="연도별 수입 지출 비교" style="display:block;width:100%;min-width:0;max-width:100%;height:'+H+'px">'+grid+bars+lines+'</svg>'+inspector;
 }
 
 function renderCompareChart(){
@@ -17705,6 +17733,8 @@ window.renderFyTabs=renderFyTabs;
 window.initFyEngine=initFyEngine;
 window.renderCompareChart=renderCompareChart;
 window.switchCompareTab=switchCompareTab;
+window.selectCompareYear=selectCompareYear;
+window.toggleCompareDetail=toggleCompareDetail; // Required by the detail button inline onclick; keep both variants in sync.
 window.getFyRange=getFyRange;
 window.isDateInFy=isDateInFy;
 
@@ -17741,14 +17771,14 @@ FUNCTION CLUSTERS
 --&gt;
 &lt;style&gt;
 :root{--line:rgba(255,255,255,.10);--text:#ecf2ff;--muted:#9fb0d6;--blue:#3b82f6;--amber:#f59e0b;--green:#34d399;--red:#ef4444}
-*{box-sizing:border-box}html,body{margin:0;padding:0;overflow-x:hidden;background:radial-gradient(900px 500px at 0% -10%, rgba(59,130,246,.18), transparent 45%),radial-gradient(800px 500px at 100% 0%, rgba(139,92,246,.14), transparent 40%),linear-gradient(180deg,#08101d,#0d1526);color:var(--text);font-family:Arial,sans-serif}
-.wrap{max-width:1480px;margin:0 auto;padding:24px;overflow-x:hidden}.lock{position:fixed;inset:0;display:grid;place-items:center;background:rgba(4,8,16,.88);padding:20px;z-index:50}
+*{box-sizing:border-box}html,body{margin:0;padding:0;overflow-x:clip;background:radial-gradient(900px 500px at 0% -10%, rgba(59,130,246,.18), transparent 45%),radial-gradient(800px 500px at 100% 0%, rgba(139,92,246,.14), transparent 40%),linear-gradient(180deg,#08101d,#0d1526);color:var(--text);font-family:Arial,sans-serif}
+.wrap{max-width:1480px;margin:0 auto;padding:24px;overflow-x:clip}.lock{position:fixed;inset:0;display:grid;place-items:center;background:rgba(4,8,16,.88);padding:20px;z-index:50}
 .lock-card,.card{background:linear-gradient(180deg,rgba(19,32,58,.96),rgba(16,25,44,.96));border:1px solid var(--line);border-radius:22px;box-shadow:0 18px 40px rgba(0,0,0,.30);backdrop-filter:blur(12px)}
 .lock-card{width:min(460px,100%);padding:22px}.brand{display:flex;gap:12px;align-items:center}.logo{width:56px;height:56px;border-radius:50%;display:grid;place-items:center;background:#0e1a31;border:1px solid var(--line);font-weight:800;letter-spacing:.08em;overflow:hidden;flex:0 0 auto}.logo img{width:100%;height:100%;object-fit:cover}
 h1,h2,h3{margin:0}.sub{color:var(--muted);font-size:12px}input,select,textarea{width:100%;padding:11px 12px;border-radius:12px;border:1px solid var(--line);background:#0c1628;color:var(--text);outline:none;font-size:16px}textarea{min-height:90px;resize:vertical}
 .btn{border:1px solid var(--line);background:#1a2a47;color:#fff;border-radius:12px;padding:10px 14px;cursor:pointer}.btn.primary{background:#1f4ed8}
-.row,.topbar,.nav,.actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.topbar{justify-content:space-between;margin-bottom:18px}.tab.active,.month-btn.active{background:#1f4ed8}
-.page{display:none}.page.active{display:block;overflow-x:hidden}.grid4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.card{padding:16px}
+.row,.topbar,.nav,.actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.topbar{justify-content:space-between;margin-bottom:18px;position:sticky!important;top:0!important;z-index:1000!important;background:rgba(8,16,29,.97)}.tab.active,.month-btn.active{background:#1f4ed8}
+.page{display:none}.page.active{display:block;overflow-x:clip}.grid4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.card{padding:16px}
 .kpi .label{font-size:12px;color:var(--muted)}.kpi .value{font-size:30px;font-weight:800;margin-top:8px}.table-wrap{overflow:auto}table{width:100%;border-collapse:collapse;table-layout:fixed}th,td{padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.08);vertical-align:top;font-size:13px}th{text-align:center;background:#173055}
 .w-date{width:92px;text-align:center}
 .w-kind{width:64px;text-align:center}
@@ -19338,11 +19368,7 @@ justify-content:flex-start;
   0%,100%{ transform:scale(1); filter:drop-shadow(0 0 0 rgba(252,165,165,0)); }
   50%{ transform:scale(1.08); filter:drop-shadow(0 0 10px rgba(252,165,165,.28)); }
 }
-html[data-access-mode="share"] .metric-msg-btn,
-body[data-access-mode="share"] .metric-msg-btn,
-#app[data-access-mode="share"] .metric-msg-btn{
-  display:none !important;
-}
+
 
 
 /* === v20 UI FIX (강제 적용) === */
@@ -19968,6 +19994,19 @@ body[data-access-mode="share"] .metric-msg-btn,
 .fy-tab.active{background:#1e3a5f;color:#93c5fd;border-color:#3b82f6}
 .fy-tab:hover:not(.active){background:rgba(59,130,246,.10);color:var(--text)}
 .fy-context-badge{font-size:10px;color:var(--muted);padding:1px 0 4px 2px;opacity:.72;white-space:nowrap;flex-shrink:0}
+.compare-selector-row{display:grid;grid-template-columns:82px 82px minmax(0,1fr);gap:12px;margin-top:10px;align-items:center}
+.compare-selector-row&gt;div{min-width:0}.compare-selector-row select{width:100%;min-width:0}
+.compare-meta{min-width:0;text-align:right;font-size:11px;line-height:1.4;color:#94a3b8}
+.compare-meta-legend{display:flex;justify-content:flex-end;gap:12px;margin-bottom:3px;font-size:12px;color:#cbd5e1;white-space:nowrap}
+.compare-meta-summary{overflow-wrap:anywhere}
+.compare-tab-bar #compareDetailToggle{margin-left:auto;padding:6px 9px}
+@media(max-width:480px){.compare-selector-row{grid-template-columns:66px 66px minmax(0,1fr);gap:8px}.compare-selector-row select{padding-left:7px;padding-right:3px;font-size:13px}.compare-selector-row .note{font-size:10px}.compare-meta{font-size:10px}.compare-meta-legend{font-size:10px;gap:9px}}
+
+.compare-inspector{display:flex;gap:10px;align-items:center;border-top:1px solid rgba(148,163,184,.16);padding-top:9px;margin-top:5px}
+.compare-inspect-year{flex:0 0 76px;width:76px;min-width:0;padding:7px 4px;font-size:12px}
+.compare-year-readout{flex:1;min-width:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;text-align:right;font-size:10px;line-height:1.5}
+.compare-year-readout span{display:block;color:#94a3b8}.compare-year-readout strong{display:block;font-size:clamp(9px,2.5vw,12px);font-variant-numeric:tabular-nums;white-space:nowrap;letter-spacing:-.3px}
+@media(max-width:480px){.compare-inspector{gap:6px}.compare-inspect-year{flex-basis:62px;width:62px;font-size:11px}.compare-year-readout{gap:4px}.compare-year-readout strong{font-size:9px}}
 .compare-card{min-height:0;overflow:visible}.compare-card .compare-header h3{font-size:inherit;margin:0}.compare-body{overflow:visible}#compareRangeChart,#compareABChart{min-width:0;overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;width:100%}
 .compare-toggle-icon{font-size:13px;color:var(--muted);transition:transform .2s}
 .compare-toggle-icon.open{transform:rotate(180deg)}
@@ -20008,6 +20047,13 @@ body[data-access-mode="share"] .metric-msg-btn,
   .dash-main-right &gt; .card{height:100%;box-sizing:border-box}
 }
 /* ===== END BMW 데스크톱 ===== */
+
+/* Finance chart motion: SVG-local transforms preserve chart size and all values. */
+@keyframes bmwFinanceBarRise{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+@keyframes bmwFinanceChartReveal{from{opacity:0}to{opacity:1}}
+.bmw-finance-bar{transform-box:fill-box;transform-origin:center bottom;animation:bmwFinanceBarRise 650ms cubic-bezier(.22,1,.36,1) both}
+.bmw-finance-label,.bmw-finance-trend{animation:bmwFinanceChartReveal 520ms ease-out 140ms both}
+@media(prefers-reduced-motion:reduce){.bmw-finance-bar,.bmw-finance-label,.bmw-finance-trend{animation:none}}
 &lt;/style&gt;
 &lt;!-- REFRACTOR SECTION: Layout foundations / dashboard grid :: step1_layout_lock --&gt;
 &lt;style id="step1_layout_lock"&gt;
@@ -22491,7 +22537,7 @@ function bindMemberActions(){
 
   function runArrearsSms(){
     const accessMode = String(document.body.getAttribute('data-access-mode') || document.documentElement.getAttribute('data-access-mode') || '').trim();
-    if(accessMode === 'share') return;
+    // SMS composer is available in both modes; device owner confirms Send.
 
     const member = getSelectedMemberByPanel();
     if(!member){
@@ -24479,6 +24525,27 @@ document.addEventListener('DOMContentLoaded', function(){
   .bmw-intro-logo,.bmw-intro-title{opacity:1;transform:none;}
 }
 &lt;/style&gt;
+&lt;style id="bmw-mobile-layout-v1"&gt;
+/* Scoped mobile corrections; no finance/state rules. */
+#kBal,#kIn,#kOut,#kDelinq{white-space:nowrap!important;min-width:0;max-width:100%;font-variant-numeric:tabular-nums}
+#kDelinq{display:flex!important;align-items:baseline;gap:3px!important;flex-wrap:nowrap!important}
+#kDelinq&gt;span{white-space:nowrap!important;margin-left:0!important;flex-shrink:0}
+.fee-quick-item{grid-template-columns:minmax(0,1fr) max-content!important;align-items:start}
+.fee-quick-item&gt;span:last-child{white-space:nowrap!important;flex-shrink:0}
+#feeMemberQuickPanel .metric-msg-btn{display:inline-flex!important;visibility:visible!important;align-items:center;justify-content:center}
+#birthdayKpiCard{position:relative}
+#birthdayKpiCard .birthday-kpi-badge{cursor:pointer;touch-action:manipulation}
+.bmw-birthday-spark{position:absolute;left:50%;top:30%;width:6px;height:6px;border-radius:2px;pointer-events:none;z-index:9;animation:bmwBirthdayBurst 1100ms ease-out forwards}
+@keyframes bmwBirthdayBurst{from{opacity:1;transform:translate(0,0) rotate(0)}to{opacity:0;transform:translate(var(--spark-x),var(--spark-y)) rotate(300deg)}}
+@media(prefers-reduced-motion:reduce){.bmw-birthday-spark{animation-duration:1ms}.metric-msg-btn{animation:none!important}}
+@media(max-width:768px){
+ #dashboard .kpi{min-width:0!important;overflow:hidden;padding:14px!important}
+ #kDelinq&gt;span:first-child{font-size:1em!important}
+ #kDelinq&gt;span:nth-child(2){font-size:.52em!important}
+ #kDelinq&gt;span:nth-child(3){font-size:.42em!important;letter-spacing:-.35px}
+ #feeMemberQuickPanel .fee-quick-item{display:grid!important;gap:10px}
+}
+&lt;/style&gt;
 &lt;/head&gt;&lt;body&gt;
 &lt;!-- APP SECTION: login lock screen --&gt;
 &lt;div id="bmwIntroSplash" aria-hidden="true"&gt;
@@ -24519,18 +24586,21 @@ document.addEventListener('DOMContentLoaded', function(){
         &lt;div class="fy-tab-bar compare-tab-bar"&gt;
           &lt;button class="fy-tab active" id="compareTabRange" onclick="switchCompareTab('range')"&gt;전체/범위&lt;/button&gt;
           &lt;button class="fy-tab" id="compareTabAB" onclick="switchCompareTab('ab')"&gt;A/B 비교&lt;/button&gt;
+          &lt;button class="fy-tab" id="compareDetailToggle" type="button" onclick="toggleCompareDetail()" aria-pressed="false" title="전체 추세를 유지하며 선택한 연도의 정확한 수입·지출을 확인합니다."&gt;상세 보기&lt;/button&gt;
         &lt;/div&gt;
         &lt;div id="compareRangePanel"&gt;
-          &lt;div style="display:flex;gap:12px;margin-top:10px;flex-wrap:wrap"&gt;
+          &lt;div class="compare-selector-row"&gt;
             &lt;div&gt;&lt;div class="note"&gt;시작 연도&lt;/div&gt;&lt;select id="compareFromYear" onchange="renderCompareChart()"&gt;&lt;/select&gt;&lt;/div&gt;
             &lt;div&gt;&lt;div class="note"&gt;종료 연도&lt;/div&gt;&lt;select id="compareToYear" onchange="renderCompareChart()"&gt;&lt;/select&gt;&lt;/div&gt;
+            &lt;div class="compare-meta" id="compareRangeMeta" aria-live="polite"&gt;&lt;/div&gt;
           &lt;/div&gt;
           &lt;div id="compareRangeChart" style="margin-top:12px"&gt;&lt;/div&gt;
         &lt;/div&gt;
         &lt;div id="compareABPanel" style="display:none"&gt;
-          &lt;div style="display:flex;gap:12px;margin-top:10px;flex-wrap:wrap"&gt;
+          &lt;div class="compare-selector-row"&gt;
             &lt;div&gt;&lt;div class="note"&gt;A 연도&lt;/div&gt;&lt;select id="compareYearA" onchange="renderCompareChart()"&gt;&lt;/select&gt;&lt;/div&gt;
             &lt;div&gt;&lt;div class="note"&gt;B 연도&lt;/div&gt;&lt;select id="compareYearB" onchange="renderCompareChart()"&gt;&lt;/select&gt;&lt;/div&gt;
+            &lt;div class="compare-meta" id="compareABMeta" aria-live="polite"&gt;&lt;/div&gt;
           &lt;/div&gt;
           &lt;div id="compareABChart" style="margin-top:12px"&gt;&lt;/div&gt;
         &lt;/div&gt;
@@ -24637,7 +24707,7 @@ document.addEventListener('DOMContentLoaded', function(){
 &lt;div&gt;&lt;div class="note"&gt;회계 시작월&lt;/div&gt;&lt;div class="settings-stepper"&gt;&lt;input id="sFrom" max="12" min="1" step="1" type="number"/&gt;&lt;div class="settings-stepper-btns"&gt;&lt;button class="settings-stepper-btn" data-dir="up" data-target="sFrom" type="button"&gt;▲&lt;/button&gt;&lt;button class="settings-stepper-btn" data-dir="down" data-target="sFrom" type="button"&gt;▼&lt;/button&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;
 &lt;div&gt;&lt;div class="note"&gt;회계 종료월&lt;/div&gt;&lt;div class="settings-stepper"&gt;&lt;input id="sTo" max="12" min="1" step="1" type="number"/&gt;&lt;div class="settings-stepper-btns"&gt;&lt;button class="settings-stepper-btn" data-dir="up" data-target="sTo" type="button"&gt;▲&lt;/button&gt;&lt;button class="settings-stepper-btn" data-dir="down" data-target="sTo" type="button"&gt;▼&lt;/button&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;
 &lt;div&gt;&lt;div class="note"&gt;월 회비 금액&lt;/div&gt;&lt;div class="settings-stepper"&gt;&lt;input id="sFee" min="0" step="10000" type="number"/&gt;&lt;div class="settings-stepper-btns"&gt;&lt;button class="settings-stepper-btn" data-dir="up" data-target="sFee" type="button"&gt;▲&lt;/button&gt;&lt;button class="settings-stepper-btn" data-dir="down" data-target="sFee" type="button"&gt;▼&lt;/button&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;div style="grid-column:1 / -1"&gt;&lt;div class="note"&gt;현 회계연도 이월금 &lt;span style="font-size:11px;color:#9fb0d6;font-weight:400"&gt;— 현재 활성 연도의 시작 잔액 (과거 연도 잔액은 원장 데이터로 자동 계산됩니다)&lt;/span&gt;&lt;/div&gt;&lt;input id="sCarry" step="10000" type="number" style="max-width:200px"/&gt;&lt;/div&gt;
+&lt;div style="grid-column:1 / -1"&gt;&lt;div class="note"&gt;기존 호환 이월금 &lt;span style="font-size:11px;color:#9fb0d6;font-weight:400"&gt;— 실제 계산 기준은 회계연도별 시작잔액 잠금 또는 자동 이월값입니다.&lt;/span&gt;&lt;/div&gt;&lt;input id="sCarry" step="10000" type="number" style="max-width:200px"/&gt;&lt;/div&gt;
 &lt;div&gt;&lt;div class="note"&gt;배포 기준일&lt;/div&gt;&lt;input id="sAsOf" readonly="" type="date"/&gt;&lt;/div&gt;
 &lt;div&gt;&lt;div class="note"&gt;운영용 비밀번호&lt;/div&gt;&lt;input disabled="" id="sAdminPw" readonly="" value="881013"/&gt;&lt;/div&gt;
 &lt;div&gt;&lt;div class="note"&gt;배포용 비밀번호&lt;/div&gt;&lt;input disabled="" id="sSharePw" readonly="" value="3018"/&gt;&lt;/div&gt;
@@ -24830,8 +24900,9 @@ document.addEventListener('DOMContentLoaded', function(){
   &lt;/div&gt;
 
   &lt;div id="infoConstitutionReadCard" style="margin-top:14px"&gt;
-    &lt;div id="infoConstitutionStickySpacer" style="display:none;height:0"&gt;&lt;/div&gt;
-    &lt;div id="infoConstitutionStickyAnchor"&gt;&lt;/div&gt;
+    &lt;!-- Protected: anchor must precede spacer; pinning must never move its own threshold. --&gt;
+    &lt;div id="infoConstitutionStickyAnchor" style="overflow-anchor:none"&gt;&lt;/div&gt;
+    &lt;div id="infoConstitutionStickySpacer" style="display:none;height:0;overflow-anchor:none"&gt;&lt;/div&gt;
     &lt;div id="infoConstitutionStickyFilters" style="position:sticky; top:74px; z-index:30; background:rgba(15,24,44,.98); backdrop-filter:blur(10px); padding:0 0 4px 0; margin:0 0 8px 0; border-bottom:1px solid rgba(255,255,255,.06);"&gt;
       &lt;div id="infoConstitutionStickyInner" style="max-width:none; margin:0; padding:0;"&gt;
         &lt;div class="actions" id="infoChapterFilterRow" style="margin-top:8px; padding-left:0;"&gt;&lt;/div&gt;
@@ -25047,25 +25118,17 @@ function setLogo(){
 
 /* FY opening/closing are one continuous cash ledger anchored to confirmed FY2026.
    Earlier amounts are reconstructed, not independently bank-certified. */
-window.bmwConfirmedOpening = function(fy){
-  var y=Number(fy), anchor=2026, amount=5622211;
-  if(!Number.isInteger(y) || y&lt;2014 || y&gt;2200) return 0;
-  var rows=(typeof state!=='undefined' &amp;&amp; state &amp;&amp; Array.isArray(state.ledger))?state.ledger:[];
-  function range(n){
-    if(n===2026) return ['2026-02','2026-12'];
-    if(n&gt;=2027) return [n+'-01',n+'-12'];
-    return [n+'-02',(n+1)+'-01'];
-  }
-  var lo=range(Math.min(y,anchor))[0], hi=range(Math.max(y,anchor)-1)[1], net=0;
-  if(y===anchor) return amount;
-  rows.forEach(function(r){
-    var ym=String(r.date||'').slice(0,7);
-    if(ym&gt;=lo &amp;&amp; ym&lt;=hi){
-      var a=Math.round(Number(r.amount)||0);
-      if(r.kind==='income') net+=a; else if(r.kind==='expense') net-=a;
-    }
-  });
-  return amount+(y&lt;anchor?-net:net);
+window.bmwConfirmedOpening = function(fy,ignoreOwnLock){
+ const y=Number(fy);if(!Number.isInteger(y)||y&lt;2014||y&gt;2200)return 0;
+ const st=typeof state!=='undefined'&amp;&amp;state?state:{settings:{},ledger:[]},locks=st.settings.fyOpeningLocks||{};
+ let base=2026,amount=5622211;
+ // A confirmed FY2026 anchor remains the historical baseline. Later enabled locks propagate forward.
+ const candidates=Object.keys(locks).map(Number).filter(n=&gt;(ignoreOwnLock?n&lt;y:n&lt;=y)&amp;&amp;(y&lt;2026||n&gt;=2026)).sort((a,b)=&gt;b-a);
+ for(const n of candidates){const lock=locks[String(n)],enabled=lock&amp;&amp;typeof lock==='object'?lock.enabled:lock!==''&amp;&amp;lock!=null;if(enabled){base=n;amount=Math.round(Number(typeof lock==='object'?lock.amount:lock)||0);break;}}
+ function range(n){return n&lt;2026?[n+'-02',(n+1)+'-01']:n===2026?['2026-02','2026-12']:[n+'-01',n+'-12'];}
+ if(y===base)return amount;const lo=range(Math.min(y,base))[0],hi=range(Math.max(y,base)-1)[1];let net=0;
+ for(const r of st.ledger||[]){const ym=String(r.date||'').slice(0,7);if(ym&gt;=lo&amp;&amp;ym&lt;=hi){const a=Math.round(Number(r.amount)||0);if(r.kind==='income')net+=a;else if(r.kind==='expense')net-=a;}}
+ return amount+(y&lt;base?-net:net);
 };
 
 // PROTECTED BMW-FINANCE-DEPLOY-01: FY-filtered cash totals and balances.
@@ -25126,11 +25189,18 @@ function bmwFeeContext(){
  return {fy,months,cutoff:now&lt;end?now:end,closed:now&gt;end};
 }
 function bmwFeeMonths(row){
- const text=String(row.memo||''),out=[],ym=String(row.date).slice(0,7);let year=Number(ym.slice(0,4));
- if(/기간산입 아닌|일시금|차액/.test(text))return out;
- const range=/['’]?(\d{2,4})[.](\d{1,2})\s*[~～\-]\s*['’]?(\d{2,4})[.](\d{1,2})/.exec(text);
+ const text=String(row.memo||'').replace(/\[[^\]]*\]/g,''),out=[],ym=String(row.date).slice(0,7);let year=Number(ym.slice(0,4));
+ if(/기간산입 아닌|일시금/.test(text))return out;
+ const enrollment=/(\d{2,4})년\s*1년분\s*\+\s*(\d{2,4})년\s*(\d{1,2})개월분\[(\d{1,2})월[~～](\d{1,2})월\]/.exec(String(row.memo||''));
+ if(enrollment){
+  const fy=Number(enrollment[1])&lt;100?2000+Number(enrollment[1]):Number(enrollment[1]),sy=Number(enrollment[2])&lt;100?2000+Number(enrollment[2]):Number(enrollment[2]);
+  for(let i=0;i&lt;12;i++){let n=2+i;out.push((fy+Math.floor((n-1)/12))+'-'+String((n-1)%12+1).padStart(2,'0'));}
+  for(let n=Number(enrollment[4]);n&lt;=Number(enrollment[5]);n++)out.push(sy+'-'+String(n).padStart(2,'0'));
+  return out;
+ }
+ const range=/['’]?(\d{2,4})[.](\d{1,2})\s*[~～\-]\s*(?:['’]?(\d{2,4})[.])?(\d{1,2})/.exec(text);
  function Y(v){return Number(v)&lt;100?2000+Number(v):Number(v);}
- if(range){let y=Y(range[1]),m=Number(range[2]),ey=Y(range[3]),em=Number(range[4]);for(let k=0;k&lt;60&amp;&amp;(y&lt;ey||(y===ey&amp;&amp;m&lt;=em));k++){out.push(y+'-'+String(m).padStart(2,'0'));if(++m===13){m=1;y++;}}}
+ if(range){let y=Y(range[1]),m=Number(range[2]),ey=range[3]?Y(range[3]):Y(range[1]),em=Number(range[4]);if(!range[3]&amp;&amp;em&lt;m)ey++;for(let k=0;k&lt;60&amp;&amp;(y&lt;ey||(y===ey&amp;&amp;m&lt;=em));k++){out.push(y+'-'+String(m).padStart(2,'0'));if(++m===13){m=1;y++;}}}
  // A range may coexist with an additional explicitly paid month before it.
  const prefix=range?text.slice(0,range.index):text, re=/(?:(\d{2,4})\s*년\s*)?(\d{1,2})\s*월/g;let hit;
  while((hit=re.exec(prefix))){if(hit[1])year=Y(hit[1]);const m=Number(hit[2]);if(m&gt;=1&amp;&amp;m&lt;=12)out.push(year+'-'+String(m).padStart(2,'0'));}
@@ -25151,8 +25221,8 @@ function bmwFeeRecord(member){
  }
  const elapsed=ctx.months.filter(x=&gt;x.key&lt;=ctx.cutoff.slice(0,7)).length;
  const due=ctx.months.slice(0,elapsed),paidMonths=due.filter(x=&gt;slots[x.key]).length,unpaidMonths=member.active?elapsed-paidMonths:0;
- const prepaidMonths=ctx.months.filter(x=&gt;slots[x.key]&amp;&amp;slots[x.key].prepaid).length;
- const fee=typeof getFeeForYear==='function'?getFeeForYear(ctx.fy,state.settings.feeRules||[]):Number(state.settings.feeAmount||30000);
+ const prepaidMonths=ctx.months.filter(x=&gt;x.key&gt;ctx.cutoff.slice(0,7)&amp;&amp;slots[x.key]).length;
+ const rules=state.settings.feeRules||[],rule=rules.slice().reverse().find(x=&gt;ctx.fy&gt;=Number(x.fromYear)&amp;&amp;ctx.fy&lt;=Number(x.toYear)); const fee=rule?Number(rule.amount):(ctx.fy&lt;=2014?10000:ctx.fy&lt;=2023?20000:30000);
  return {...ctx,slots,issues,paidMonths,unpaidMonths,prepaidMonths,effectivePaid:Object.keys(slots).length,ledgerMonths:Object.keys(slots).length,manualPrepayMonths:0,rate:elapsed?Math.round(100*paidMonths/elapsed):0,arrearsAmount:unpaidMonths*fee,originalArrearsAmount:0,arrearsUnits:unpaidMonths,paidAmount:Object.keys(slots).length*fee,currentYearPaidAmount:Object.keys(slots).length*fee};
 }
 
@@ -25188,49 +25258,22 @@ function ledgerRowHtml(x){
 function fillMemberList(){memberList.innerHTML=state.members.filter(m=&gt;m.active).map(m=&gt;`&lt;option value="${m.name}"&gt;`).join("");}
 function fillTypeOptions(){const income=parseSettingLines(state&amp;&amp;state.settings?state.settings.incomeOptions:"");const expense=parseSettingLines(state&amp;&amp;state.settings?state.settings.expenseOptions:"");const types=lKind.value==="income"?(income.length?income:incomeTypes):(expense.length?expense:expenseTypes);const current=lType.value;lType.innerHTML=types.map(t=&gt;`&lt;option value="${t}"&gt;${t}&lt;/option&gt;`).join("");if(types.includes(current))lType.value=current;else if(types.length)lType.value=types[0];}
 function renderBarChart(){
-  const data=monthlySeries();
-  const maxVal=Math.max(1,...data.flatMap(d=&gt;[d.income,d.expense]),1);
-  const w=760,h=300,pL=40,pR=10,pT=28,pB=36,iW=w-pL-pR,iH=h-pT-pB,step=iW/Math.max(1,data.length),bw=Math.min(22,step/3);
-  let s='';
-  for(let i=0;i&lt;5;i++){
-    const y=pT+(iH/4)*i;
-    s+=`&lt;line x1="${pL}" y1="${y}" x2="${w-pR}" y2="${y}" stroke="rgba(255,255,255,.08)"/&gt;`;
-  }
-  data.forEach((d,i)=&gt;{
-    const m=d.month ?? d.m;
-    const inc=Number(d.income ?? d.inc ?? 0);
-    const exp=Number(d.expense ?? d.exp ?? 0);
-    const x=pL+i*step+step/2,hi=(inc/maxVal)*iH,he=(exp/maxVal)*iH;
-    const yIn=pT+iH-hi, yEx=pT+iH-he;
-    s+=`&lt;rect x="${x-bw-4}" y="${pT+iH}" width="${bw}" height="0" rx="6" fill="#3b82f6"&gt;
-          &lt;title&gt;${m}월 수입 ${money(inc)}&lt;/title&gt;
-          &lt;animate attributeName="y" from="${pT+iH}" to="${yIn}" dur="0.65s" begin="0s" fill="freeze"/&gt;
-          &lt;animate attributeName="height" from="0" to="${hi}" dur="0.65s" begin="0s" fill="freeze"/&gt;
-        &lt;/rect&gt;`;
-    s+=`&lt;rect x="${x+4}" y="${pT+iH}" width="${bw}" height="0" rx="6" fill="#f59e0b"&gt;
-          &lt;title&gt;${m}월 지출 ${money(exp)}&lt;/title&gt;
-          &lt;animate attributeName="y" from="${pT+iH}" to="${yEx}" dur="0.7s" begin="0.05s" fill="freeze"/&gt;
-          &lt;animate attributeName="height" from="0" to="${he}" dur="0.7s" begin="0.05s" fill="freeze"/&gt;
-        &lt;/rect&gt;`;
-    s+=`&lt;text x="${x}" y="${h-8}" text-anchor="middle"&gt;${m}월&lt;/text&gt;`;
-    if(inc&gt;0){
-      const labelY = hi &gt; 24 ? (yIn+16) : Math.max(18, yIn-6);
-      const fill = hi &gt; 24 ? '#eef4ff' : '#c7d4f4';
-      s+=`&lt;text x="${x-bw/2-4}" y="${labelY}" text-anchor="middle" fill="${fill}" opacity="0"&gt;
-            ${fmtKor(inc)}
-            &lt;animate attributeName="opacity" from="0" to="1" dur="0.2s" begin="0.45s" fill="freeze"/&gt;
-          &lt;/text&gt;`;
-    }
-    if(exp&gt;0){
-      const labelY = he &gt; 24 ? (yEx+16) : Math.max(18, yEx-6);
-      const fill = he &gt; 24 ? '#fff7ed' : '#c7d4f4';
-      s+=`&lt;text x="${x+bw/2+4}" y="${labelY}" text-anchor="middle" fill="${fill}" opacity="0"&gt;
-            ${fmtKor(exp)}
-            &lt;animate attributeName="opacity" from="0" to="1" dur="0.2s" begin="0.5s" fill="freeze"/&gt;
-          &lt;/text&gt;`;
-    }
-  });
-  barChart.innerHTML=`&lt;svg viewBox="0 0 ${w} ${h}"&gt;${s}&lt;/svg&gt;`;
+ const data=monthlySeries();if(!barChart)return;
+ const w=760,h=300,L=44,R=14,T=32,B=30,PW=w-L-R,PH=h-T-B,step=PW/Math.max(1,data.length),bw=Math.min(22,step/3);
+ const maxValue=Math.max(1,...data.flatMap(d=&gt;[Number(d.income||0),Number(d.expense||0)])),scale=Math.pow(10,Math.floor(Math.log10(maxValue))),max=Math.ceil(maxValue/scale)*scale;
+ const inc=data.reduce((s,d)=&gt;s+Number(d.income||0),0),exp=data.reduce((s,d)=&gt;s+Number(d.expense||0),0),net=Math.round(inc-exp);
+ const y=v=&gt;T+PH-Number(v||0)/max*PH,fmt=v=&gt;v&gt;=10000?(v/10000).toFixed(v%10000?1:0)+'만':Math.round(v).toLocaleString('ko-KR');let grid='',bars='',lines='';
+ for(let i=0;i&lt;=4;i++){let v=max*i/4,yy=y(v);grid+=`&lt;line x1="${L}" x2="${w-R}" y1="${yy}" y2="${yy}" stroke="#7284a4" stroke-opacity=".2" stroke-dasharray="3 5"/&gt;&lt;text x="${L-7}" y="${yy+3}" text-anchor="end" style="fill:#94a3b8!important;font-size:10px"&gt;${fmt(v)}&lt;/text&gt;`;}
+ data.forEach((d,i)=&gt;{let x=L+step*(i+.5),month=d.month??d.m;
+  ['income','expense'].forEach((key,j)=&gt;{let value=Math.round(Number(d[key]||0)),bx=x+(j?4:-bw-4),yy=y(value),color=j?'#f59e0b':'#3b82f6';bars+=`&lt;rect class="bmw-finance-bar" x="${bx}" y="${yy}" width="${bw}" height="${T+PH-yy}" rx="4" style="fill:${color}!important;animation-delay:${Math.min(i*22+j*30,220)}ms"&gt;&lt;title&gt;${month}월 ${j?'지출':'수입'} ${money(value)}원 · 순증감 ${money(Number(d.income||0)-Number(d.expense||0))}원&lt;/title&gt;&lt;/rect&gt;`;
+   if(value&gt;0)bars+=`&lt;text class="bmw-finance-label" x="${bx+bw/2}" y="${Math.max(14,yy-7)}" text-anchor="middle" style="fill:${j?'#fde68a':'#bfdbfe'}!important;font-size:9px"&gt;${fmt(value)}&lt;/text&gt;`;
+  });bars+=`&lt;text x="${x}" y="${h-8}" text-anchor="middle" style="fill:#cbd5e1!important;font-size:10px"&gt;${month}월&lt;/text&gt;`;
+ });
+ ['income','expense'].forEach((key,j)=&gt;{const pts=data.map((d,i)=&gt;(L+step*(i+.5)+(j?bw/2+4:-bw/2-4))+','+y(d[key])).join(' '),color=j?'#fcd34d':'#93c5fd';lines+=`&lt;polyline class="bmw-finance-trend" points="${pts}" stroke="${color}" stroke-width="1.15" stroke-opacity="0.65" stroke-dasharray="5 5" style="fill:none!important;pointer-events:none"/&gt;`;data.forEach((d,i)=&gt;{let x=L+step*(i+.5)+(j?bw/2+4:-bw/2-4);lines+=`&lt;circle class="bmw-finance-trend" cx="${x}" cy="${y(d[key])}" r="2" fill="${color}" fill-opacity="0.75"&gt;&lt;title&gt;${d.month??d.m}월 ${j?'지출':'수입'} ${money(d[key]||0)}원&lt;/title&gt;&lt;/circle&gt;`;});});
+ // Display-only checkpoints use exactly the series drawn below; no extrapolation or carryover.
+ const peakMonth=key=&gt;{const v=Math.max(0,...data.map(d=&gt;Number(d[key]||0)));if(!v)return '없음';const rows=data.filter(d=&gt;Number(d[key]||0)===v);return (rows[0].month??rows[0].m)+'월'+(rows.length&gt;1?' 외':'');};
+ const checkpoint='최고 수입 '+peakMonth('income')+' · 지출 '+peakMonth('expense');
+ barChart.innerHTML=`&lt;div style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:3px 8px;align-items:center;margin:0 0 5px;font-size:11px;line-height:1.5;color:#94a3b8"&gt;&lt;span title="점선: 월별 실적 추이. 동일 최고액 월이 여러 개면 첫 월과 외로 표시합니다."&gt;${checkpoint}&lt;/span&gt;&lt;span style="white-space:nowrap;color:${net&gt;=0?'#6ee7b7':'#fca5a5'}" title="현재 회계연도 그래프 전체의 수입 ${money(inc)}원 − 지출 ${money(exp)}원. 이월금 제외, 기록된 거래 기준입니다."&gt;수입−지출 ${net&gt;0?'+':''}${money(net)}원&lt;/span&gt;&lt;/div&gt;&lt;svg viewBox="0 0 ${w} ${h}" preserveAspectRatio="xMidYMid meet" role="img" aria-label="월별 수입 지출 및 추이" style="width:100%;display:block"&gt;${grid}${bars}${lines}&lt;/svg&gt;`;
 }
 function renderDonut(month="all"){
   const grp = donutData(month);
@@ -25444,7 +25487,7 @@ function renderFeeStatus(){
   try{ syncFeeHeatmapLayout(); }catch(e){}
   bindFeeHeatmapScrollTracker();
   scrollFeeHeatmapToCurrentMonth(asMonth);
-  if(typeof renderFeeQuickPanel === 'function') renderFeeQuickPanel(window.feeSelectedMemberName || '');
+  if(typeof renderFeeQuickPanel === 'function') renderFeeQuickPanel(window.feeSelectedMemberName || '',{focus:false});
 }
 
 function renderDashMonthButtons(){
@@ -25591,7 +25634,7 @@ activeMembers.forEach(m=&gt;{
   const status=memberStatus(m);
   // KPI "미납 현황"의 건수는 회원회비현황 heatmap에 보이는 당해연도 미납 칸 수와 동일 기준으로 계산한다.
   // 전년도 미수금(arrears)은 금액에는 포함하되, 건수에는 중복 가산하지 않는다.
-  unpaid += Number(status.unpaidMonths||0) * feeAmount + Number(status.arrearsAmount||0);
+  unpaid += Number(status.arrearsAmount||0); // Selected-FY remaining amount; no duplicate addition.
   delinquentCases += Number(status.unpaidMonths||0);
 });
 kDelinq.dataset.targetCount=String(Number(delinquentCases||0));
@@ -31308,7 +31351,7 @@ color:#60a5fa;
     }, 30);
   }
 
-  window.hideFeeQuickPanel = function(){
+  window.hideFeeQuickPanel = function(options){
     const panel = document.getElementById('feeMemberQuickPanel');
     const card = document.getElementById('feeStatusCard');
     const search = document.getElementById('ledgerSearch');
@@ -31319,11 +31362,11 @@ color:#60a5fa;
       panel.innerHTML = '&lt;div class="fee-quick-empty"&gt;회원명을 누르면 상세가 열리고, 월 셀을 누르면 원장 거래내역으로 바로 연결됩니다.&lt;/div&gt;';
       panel.style.display = 'none';
     }
-    if(card){ scrollSectionStart(card); }
+    if(card&amp;&amp;(!options||options.focus!==false)){ scrollSectionStart(card); }
     window.feeSelectedMemberName = '';
   };
 
-  window.renderFeeQuickPanel = function(name){
+  window.renderFeeQuickPanel = function(name,options){
     const panel = document.getElementById('feeMemberQuickPanel');
     const card = document.getElementById('feeStatusCard');
     if(!panel) return;
@@ -31352,8 +31395,8 @@ color:#60a5fa;
       &lt;div class="fee-quick-grid"&gt;
         &lt;div class="fee-quick-metric ${Number(status.unpaidMonths||0) &gt; 0 ? "is-unpaid" : ""}"&gt;${Number(status.unpaidMonths||0) &gt; 0 ? `&lt;button class="metric-msg-btn" type="button" data-msg-member="${member.id}" aria-label="미납 안내 문자"&gt;✉️&lt;/button&gt;` : ``}&lt;div class="k"&gt;미납&lt;/div&gt;&lt;div class="v"&gt;${Number(status.unpaidMonths||0)}개월&lt;/div&gt;&lt;/div&gt;
         &lt;div class="fee-quick-metric"&gt;&lt;div class="k"&gt;잔여 미수금&lt;/div&gt;&lt;div class="v"&gt;${money(status.arrearsAmount||0)}원&lt;/div&gt;&lt;/div&gt;
-        &lt;div class="fee-quick-metric"&gt;&lt;div class="k"&gt;당해연도 납부&lt;/div&gt;&lt;div class="v"&gt;${Number(status.paidMonths||0)}개월&lt;/div&gt;&lt;/div&gt;
-        &lt;div class="fee-quick-metric ${Number(status.prepaidMonths||0) &gt; 0 ? "is-prepaid" : ""}"&gt;&lt;div class="k"&gt;선납&lt;/div&gt;&lt;div class="v"&gt;${Number(status.prepaidMonths||0)}개월&lt;/div&gt;&lt;/div&gt;
+        &lt;div class="fee-quick-metric"&gt;&lt;div class="k" title="선택 회계연도에서 경과한 월 중 납부가 인정된 개월"&gt;당해연도 납부&lt;/div&gt;&lt;div class="v"&gt;${Number(status.paidMonths||0)}개월&lt;/div&gt;&lt;/div&gt;
+        &lt;div class="fee-quick-metric ${Number(status.prepaidMonths||0) &gt; 0 ? "is-prepaid" : ""}"&gt;&lt;div class="k" title="선택 회계연도의 아직 도래하지 않은 월 중 납부가 인정된 개월"&gt;잔여월 선납&lt;/div&gt;&lt;div class="v"&gt;${Number(status.prepaidMonths||0)}개월&lt;/div&gt;&lt;/div&gt;
       &lt;/div&gt;
       &lt;div class="small" style="margin-top:10px"&gt;최근 내역&lt;/div&gt;
       &lt;div class="fee-quick-history"&gt;${history}&lt;/div&gt;
@@ -31362,7 +31405,8 @@ color:#60a5fa;
     if(btn){ btn.onclick = function(){ openLedgerForFeeMember(member.name, 'all', {resetSearch:false, focusLedger:true}); }; }
     const closeBtn = document.getElementById('feeQuickClose');
     if(closeBtn){ closeBtn.onclick = function(){ window.hideFeeQuickPanel(); }; }
-    if(card){ scrollSectionStart(panel); }
+    if(typeof bindMemberActions==='function') bindMemberActions();
+    if(card&amp;&amp;(!options||options.focus!==false)){ scrollSectionStart(panel); }
   };
 
   document.addEventListener('click', function(e){
@@ -31384,27 +31428,21 @@ color:#60a5fa;
 &lt;!-- REFACTOR SECTION: Nav/reset polish :: step44-nav-reset-polish --&gt;
 &lt;script id="step44-nav-reset-polish"&gt;
 (function(){
+window.bmwHeaderInset = function bmwHeaderInset(){
+ var bar=document.querySelector('.topbar');if(!bar)return 0;
+ return Math.ceil(bar.getBoundingClientRect().height)+(parseFloat(getComputedStyle(bar).top)||0);
+};
   window.scrollSectionStart = function(el, mode){
-  if(!el) return;
-  var target = el;
-  var topbar = document.querySelector('.topbar');
-  var topbarH = topbar ? Math.ceil(topbar.getBoundingClientRect().height || 0) : 0;
-  var cardOffset = topbarH + 8;
-  var y = 0;
-
-  if(target.classList &amp;&amp; target.classList.contains('page')){
-    if(mode === 'page-top'){
-      y = 0;
-    } else {
-      var firstCard = target.querySelector('.card');
-      if(firstCard) target = firstCard;
-      y = Math.max(0, target.getBoundingClientRect().top + window.pageYOffset - cardOffset);
-    }
-  } else {
-    y = Math.max(0, target.getBoundingClientRect().top + window.pageYOffset - cardOffset);
-  }
-
-  window.scrollTo({top:y, behavior:'smooth'});
+ if(!el)return;
+ if(mode==='page-top'&amp;&amp;Date.now()&lt;(window.__bmwFocusScrollUntil||0))return;
+ if(mode!=='page-top')window.__bmwFocusScrollUntil=Date.now()+500;
+ var target=el,seq=window.__bmwScrollSequence=(window.__bmwScrollSequence||0)+1;
+ if(target.classList&amp;&amp;target.classList.contains('page')&amp;&amp;mode!=='page-top')target=target.querySelector('.card')||target;
+ requestAnimationFrame(function(){requestAnimationFrame(function(){
+  if(seq!==window.__bmwScrollSequence||!target.isConnected)return;
+  var y=mode==='page-top'?0:Math.max(0,window.scrollY+target.getBoundingClientRect().top-bmwHeaderInset());
+  window.scrollTo({top:y,behavior:'smooth'});
+ });});
 };
 })();
 &lt;/script&gt;
@@ -31438,7 +31476,7 @@ color:#60a5fa;
     safeCall(function(){ if(typeof renderDashMonthButtons === 'function') renderDashMonthButtons(); });
     safeCall(function(){ if(typeof renderOverview === 'function') renderOverview(); });
     safeCall(function(){ if(typeof renderDashTable === 'function') renderDashTable(); });
-    safeCall(function(){ if(typeof hideFeeQuickPanel === 'function') hideFeeQuickPanel(); });
+    safeCall(function(){ if(typeof hideFeeQuickPanel === 'function') hideFeeQuickPanel({focus:false}); });
     var panel = document.getElementById('feeMemberQuickPanel');
     if(panel){
       panel.innerHTML = '&lt;div class="fee-quick-empty"&gt;회원명을 누르면 상세가 열리고, 월 셀을 누르면 원장 거래내역으로 바로 연결됩니다.&lt;/div&gt;';
@@ -33051,6 +33089,7 @@ html,body{scrollbar-width:auto;}
     var targetMonth = (ctx.month === 'all' || ctx.month === undefined || ctx.month === null || ctx.month === '') ? 'all' : Number(ctx.month);
     try{ dashSelectedMonth = targetMonth; }catch(e){}
     try{ window.dashSelectedMonth = targetMonth; }catch(e){}
+    if(typeof window.bmwSetInquiryMonth==='function') window.bmwSetInquiryMonth(targetMonth);
     if(typeof renderDashMonthButtons === 'function') renderDashMonthButtons();
     if(typeof renderDashTable === 'function') renderDashTable();
     setDashLedgerContextUi(window.__dashLedgerContext);
@@ -34343,7 +34382,7 @@ function applyEntryEmojiToMemo(kind, entryType, memo){
         var el = document.getElementById(window.infoSelectedChapter);
         scrollToElementWithOffset(el || document.getElementById('infoConstitutionReadCard'), extra);
       }else{
-        scrollToElementWithOffset(document.getElementById('infoConstitutionReadCard'), extra);
+        scrollToElementWithOffset(document.getElementById(window.infoSelectedChapter)||document.querySelector('#infoConstitutionReadView .mi-const-article[id]')||document.getElementById('infoConstitutionReadCard'), 0);
       }
       setTimeout(setConstitutionActiveButtons, 80);
     }, 20);
@@ -34664,7 +34703,7 @@ function applyEntryEmojiToMemo(kind, entryType, memo){
   }
   function getTopbarHeight(){
     var topbar = document.querySelector('.topbar');
-    return topbar ? Math.ceil(topbar.getBoundingClientRect().height) : 62;
+    return typeof bmwHeaderInset==='function'?bmwHeaderInset():(topbar?Math.ceil(topbar.getBoundingClientRect().height):0);
   }
   function getStickyPortal(){
     return document.getElementById('infoConstitutionStickyPortal');
@@ -34676,10 +34715,30 @@ function applyEntryEmojiToMemo(kind, entryType, memo){
     return h + sh + (extra || 4);
   }
   function scrollToElementWithOffset(el, extra){
-    if(!el) return;
-    var rect = el.getBoundingClientRect();
-    var y = window.pageYOffset + rect.top - getStickyOffset(extra);
-    smoothScrollToY(y);
+    if(!el)return;
+    var seq=window.__constitutionNavSequence=(window.__constitutionNavSequence||0)+1;
+    requestAnimationFrame(function(){requestAnimationFrame(function(){
+      if(seq!==window.__constitutionNavSequence||!el.isConnected)return;
+      // Protected: animate one navigation only; retain menu/filter offsets throughout pinning.
+      var duration=window.matchMedia&amp;&amp;window.matchMedia('(prefers-reduced-motion: reduce)').matches?0:440;
+      window.__constitutionManualLockUntil=Date.now()+duration+600;
+      var startY=window.scrollY,startTime=null;
+      function frame(now){
+        if(seq!==window.__constitutionNavSequence||!el.isConnected)return;
+        if(startTime===null)startTime=now;
+        updateMobileStickyFilters();
+        var filters=document.getElementById('infoConstitutionStickyFilters');
+        var portal=getStickyPortal();
+        var height=portal&amp;&amp;portal.style.display!=='none'?portal.getBoundingClientRect().height:(filters?filters.getBoundingClientRect().height:0);
+        var target=Math.max(0,window.scrollY+el.getBoundingClientRect().top-getTopbarHeight()-height-(extra||4));
+        var progress=duration?Math.min(1,(now-startTime)/duration):1;
+        var eased=1-Math.pow(1-progress,3);
+        window.scrollTo({top:startY+(target-startY)*eased,behavior:'instant'});
+        if(progress&lt;1)requestAnimationFrame(frame);
+        else updateMobileStickyFilters();
+      }
+      requestAnimationFrame(frame);
+    });});
   }
   function hideHorizontalScrollbar(row){
     if(!row) return;
@@ -34734,66 +34793,24 @@ function applyEntryEmojiToMemo(kind, entryType, memo){
     applyActiveAndScroll(document.getElementById('infoArticleFilterRow'), window.infoSelectedArticle, 'article');
   }
   function updateMobileStickyFilters(){
-    var sticky = document.getElementById('infoConstitutionStickyFilters');
-    var spacer = document.getElementById('infoConstitutionStickySpacer');
-    var anchor = document.getElementById('infoConstitutionStickyAnchor');
-    var page = document.getElementById('infoConstitution');
-    if(!sticky || !spacer || !anchor || !page) return;
-
-    var portal = ensureStickyPortal();
-    var isMobile = window.matchMedia('(max-width: 768px)').matches;
-    var top = getTopbarHeight() + 8;
-
-    if(page.classList.contains('active') &amp;&amp; window.infoConstitutionMode === 'view' &amp;&amp; isMobile){
-      if(sticky.parentElement !== portal){
-        portal.appendChild(sticky);
-      }
-      portal.style.display = 'block';
-      portal.style.top = (top) + "px";
-      portal.style.padding = '0';
-      portal.style.maxWidth = '1480px';
-      portal.style.margin = '0 auto';
-      sticky.style.position = 'static';
-      sticky.style.top = '';
-      sticky.style.margin = '0';
-      sticky.style.borderBottom = 'none';
-
-      var card = document.querySelector('#infoConstitution .card');
-      var padL = 10, padR = 10;
-      if(card){
-        var cs = window.getComputedStyle(card);
-        padL = parseFloat(cs.paddingLeft || '10') || 10;
-        padR = parseFloat(cs.paddingRight || '10') || 10;
-      }
-      var inner = document.getElementById('infoConstitutionStickyInner');
-      if(inner){
-        inner.style.padding = '8px ' + padR + 'px 10px ' + padL + 'px';
-      }
-      spacer.style.display = '';
-      spacer.style.height = (portal.offsetHeight || sticky.offsetHeight || 88) + 'px';
-    }else{
-      if(sticky.parentElement !== anchor.parentElement){
-        anchor.parentElement.insertBefore(sticky, anchor.nextSibling);
-      }
-      portal.style.display = 'none';
-      sticky.style.position = 'sticky';
-      sticky.style.top = (top) + "px";
-      sticky.style.left = '';
-      sticky.style.right = '';
-      sticky.style.zIndex = '30';
-      sticky.style.margin = '0 0 8px 0';
-      sticky.style.borderBottom = '1px solid rgba(255,255,255,.06)';
-      var inner2 = document.getElementById('infoConstitutionStickyInner');
-      if(inner2){
-        inner2.style.padding = '0';
-      }
-      spacer.style.display = 'none';
-      spacer.style.height = '0';
-    }
-
-    hideHorizontalScrollbar(document.getElementById('infoChapterFilterRow'));
-    hideHorizontalScrollbar(document.getElementById('infoArticleFilterRow'));
-  }
+ var filters=document.getElementById('infoConstitutionStickyFilters'),spacer=document.getElementById('infoConstitutionStickySpacer'),anchor=document.getElementById('infoConstitutionStickyAnchor'),page=document.getElementById('infoConstitution');
+ if(!filters||!spacer||!anchor||!page)return;
+ var portal=ensureStickyPortal(),top=getTopbarHeight(),card=page.querySelector('.card');
+ var show=page.classList.contains('active')&amp;&amp;window.infoConstitutionMode==='view'&amp;&amp;anchor.getBoundingClientRect().top&lt;=top;
+ if(show&amp;&amp;card){
+  var bounds=card.getBoundingClientRect();if(filters.parentElement!==portal)portal.appendChild(filters);
+  Object.assign(portal.style,{display:'block',position:'fixed',top:top+'px',left:bounds.left+'px',right:'auto',width:bounds.width+'px',maxWidth:'none',margin:'0',padding:'0',zIndex:'900'});
+  Object.assign(filters.style,{position:'static',top:'',margin:'0',borderBottom:'none'});
+  var inner=document.getElementById('infoConstitutionStickyInner');if(inner)inner.style.padding='8px 12px';
+  spacer.style.display='block';spacer.style.height=(portal.offsetHeight+8)+'px';
+ }else{
+  if(filters.parentElement!==anchor.parentElement)anchor.parentElement.insertBefore(filters,anchor.nextSibling);
+  portal.style.display='none';Object.assign(filters.style,{position:'static',top:'auto',margin:'0 0 8px 0'});
+  var inner=document.getElementById('infoConstitutionStickyInner');if(inner)inner.style.padding='8px 12px';
+  spacer.style.display='none';spacer.style.height='0';
+ }
+ hideHorizontalScrollbar(document.getElementById('infoChapterFilterRow'));hideHorizontalScrollbar(document.getElementById('infoArticleFilterRow'));
+ }
   function applyConstitutionMode(mode){
     window.infoConstitutionMode = (mode === 'edit') ? 'edit' : 'view';
     var read = document.getElementById('infoConstitutionReadCard');
@@ -34839,7 +34856,7 @@ function applyEntryEmojiToMemo(kind, entryType, memo){
         var el = document.getElementById(window.infoSelectedChapter);
         scrollToElementWithOffset(el || document.getElementById('infoConstitutionReadCard'), 0);
       }else{
-        scrollToElementWithOffset(document.getElementById('infoConstitutionReadCard'), 0);
+        scrollToElementWithOffset(document.querySelector('#infoConstitutionReadView .mi-const-chapter[id]')||document.getElementById('infoConstitutionReadCard'), 0);
       }
       setTimeout(setConstitutionActiveButtons, 80);
     }, 20);
@@ -34852,14 +34869,14 @@ function applyEntryEmojiToMemo(kind, entryType, memo){
     applyConstitutionMode('view');
     setTimeout(function(){
       var isMobile = window.matchMedia &amp;&amp; window.matchMedia('(max-width: 768px)').matches;
-      var extra = isMobile ? 0 : 96;
+      var extra = 0;
       if(window.infoSelectedArticle !== 'all'){
         var el = document.getElementById(window.infoSelectedArticle);
         var chapterEl = el ? el.closest('.mi-const-chapter[id]') : null;
         if(chapterEl &amp;&amp; chapterEl.id) window.infoSelectedChapter = chapterEl.id;
         scrollToElementWithOffset(el || document.getElementById('infoConstitutionReadCard'), extra);
       }else{
-        scrollToElementWithOffset(document.getElementById('infoConstitutionReadCard'), extra);
+        scrollToElementWithOffset(document.getElementById(window.infoSelectedChapter)||document.querySelector('#infoConstitutionReadView .mi-const-article[id]')||document.getElementById('infoConstitutionReadCard'), 0);
       }
       setTimeout(setConstitutionActiveButtons, 80);
     }, 20);
@@ -34873,6 +34890,7 @@ function applyEntryEmojiToMemo(kind, entryType, memo){
       var page = document.getElementById('infoConstitution');
       if(!page || !page.classList.contains('active')) return;
       if(window.infoConstitutionMode === 'edit') return;
+      updateMobileStickyFilters();
       if(autoSyncLocked()) return;
 
       var isMobile = window.matchMedia &amp;&amp; window.matchMedia('(max-width: 768px)').matches;
@@ -35336,20 +35354,38 @@ function initYearCompareCard(){
     if(!open){ if(!toggle.__compareSelectionReady){ initCompareSelects(); toggle.__compareSelectionReady=true; } renderCompareChart(); }
   };
   toggle.addEventListener('click',toggle.__fyCompareHandler);
-  // Preserve comparison selections on collapse; outside pointer works for touch and mouse.
-  if(!toggle.__compareOutsideHandler){
-    toggle.__compareOutsideHandler=function(e){
-      var card=document.getElementById('yearCompareCard');
-      if(card &amp;&amp; !card.contains(e.target) &amp;&amp; body.style.display!=='none'){
-        body.style.display='none'; if(icon) icon.textContent='▼';
-      }
-    };
-    document.addEventListener('pointerdown',toggle.__compareOutsideHandler,true);
-  }
+  // Manual open/close only; comparison selections persist.
 }
 
 /* ── 비교 차트 ── */
 var __cmpMode='range';
+var __cmpDetailed=false;
+var __cmpSelectedYear=null;
+function compareYearReadout(year){
+ var t=getYearTotals(year),net=Math.round(t.income-t.expense);
+ function value(label,n,color){return '&lt;div&gt;&lt;span&gt;'+label+'&lt;/span&gt;&lt;strong style="color:'+color+'"&gt;'+Math.round(n).toLocaleString('ko-KR')+'원&lt;/strong&gt;&lt;/div&gt;';}
+ return value('수입',t.income,'#93c5fd')+value('지출',t.expense,'#fbbf24')+value('수입−지출',net,net&lt;0?'#fca5a5':'#6ee7b7');
+}
+function selectCompareYear(year){
+ __cmpSelectedYear=Number(year);
+ var host=document.getElementById(__cmpMode==='range'?'compareRangeChart':'compareABChart');
+ if(!host)return;
+ var readout=host.querySelector('.compare-year-readout'),select=host.querySelector('.compare-inspect-year');
+ if(readout)readout.innerHTML=compareYearReadout(__cmpSelectedYear);
+ if(select)select.value=String(__cmpSelectedYear);
+ host.querySelectorAll('[data-compare-year]').forEach(function(node){
+  var active=Number(node.getAttribute('data-compare-year'))===__cmpSelectedYear;
+  node.setAttribute('aria-pressed',String(active));
+  var focus=node.querySelector('.compare-year-focus');if(focus)focus.setAttribute('fill-opacity',active?'.12':'0');
+ });
+}
+
+function toggleCompareDetail(){
+ __cmpDetailed=!__cmpDetailed;
+ var btn=document.getElementById('compareDetailToggle');
+ if(btn){btn.textContent=__cmpDetailed?'전체 보기':'상세 보기';btn.setAttribute('aria-pressed',String(__cmpDetailed));btn.classList.toggle('active',__cmpDetailed);}
+ renderCompareChart();
+}
 function switchCompareTab(mode){
   __cmpMode=mode;
   var rBtn=document.getElementById('compareTabRange');
@@ -35392,35 +35428,49 @@ function getYearTotals(fy){
   return {income:inc,expense:exp};
 }
 function buildBarSVG(years){
-  if(!years.length) return '&lt;p style="opacity:.6;padding:12px"&gt;데이터가 없습니다.&lt;/p&gt;';
-  var data=years.map(function(y){var t=getYearTotals(y);return {year:y,income:t.income,expense:t.expense};});
-  var peak=Math.max(1,Math.max.apply(null,data.map(function(d){return Math.max(d.income,d.expense);}))), step=Math.pow(10,Math.floor(Math.log10(peak))), max=Math.ceil(peak/step)*step;
-  var L=54,T=26,H=260,B=32,PH=H-T-B,G=94,BAR=25,GAP=7,W=L+data.length*G+12;
-  function yy(v){return T+PH-(v/max)*PH;}
-  function label(v){return v&gt;=10000?Math.round(v/10000)+'만':String(v);}
-  var grid='', bars='', lines='';
-  for(var k=0;k&lt;=4;k++){
-    var v=max*k/4,y=yy(v);
-    grid+='&lt;line x1="'+L+'" x2="'+(W-12)+'" y1="'+y+'" y2="'+y+'" stroke="#7184a7" stroke-opacity=".22" stroke-dasharray="3 5"/&gt;'+
-      '&lt;text x="'+(L-9)+'" y="'+(y+4)+'" text-anchor="end" style="fill:#94a3b8!important;font-size:10px"&gt;'+label(v)+'&lt;/text&gt;';
-  }
-  data.forEach(function(d,i){
-    var x=L+i*G+12;
-    ['income','expense'].forEach(function(key,j){var value=d[key],bx=x+j*(BAR+GAP),y=yy(value),color=j?'#f59e0b':'#3b82f6';
-      bars+='&lt;rect x="'+bx+'" y="'+y+'" width="'+BAR+'" height="'+Math.max(0,H-B-y)+'" rx="4" style="fill:'+color+'!important"&gt;&lt;title&gt;'+d.year+' '+(j?'지출':'수입')+' '+value.toLocaleString('ko-KR')+'원&lt;/title&gt;&lt;/rect&gt;'+
-        '&lt;text x="'+(bx+BAR/2)+'" y="'+(y-9)+'" text-anchor="middle" style="fill:'+(j?'#fde68a':'#bfdbfe')+'!important;font-size:10px"&gt;'+label(value)+'&lt;/text&gt;';
-    });
-    bars+='&lt;text x="'+(x+BAR+GAP/2)+'" y="'+(H-9)+'" text-anchor="middle" style="fill:#cbd5e1!important;font-size:11px"&gt;'+d.year+'&lt;/text&gt;';
+ if(!years.length)return '&lt;p&gt;데이터가 없습니다.&lt;/p&gt;';
+ var host=document.getElementById(__cmpMode==='range'?'compareRangeChart':'compareABChart');
+ var detailed=typeof __cmpDetailed!=='undefined'&amp;&amp;__cmpDetailed;
+ var W=Math.max(240,Math.round(host&amp;&amp;host.clientWidth||560)),H=220,L=42,T=24,B=28,PH=H-T-B;
+ var selectedYear=typeof __cmpSelectedYear!=='undefined'&amp;&amp;years.indexOf(__cmpSelectedYear)&gt;=0?__cmpSelectedYear:years[0];
+ if(detailed)__cmpSelectedYear=selectedYear;
+ var data=years.map(function(y){var t=getYearTotals(y);return {year:y,income:t.income,expense:t.expense};});
+ var peak=Math.max(1,Math.max.apply(null,data.map(function(d){return Math.max(d.income,d.expense);}))),step=Math.pow(10,Math.floor(Math.log10(peak))),max=Math.ceil(peak/step)*step;
+ var G=(W-L-10)/data.length,BAR=Math.max(3,Math.min(24,(G-8)/2)),GAP=Math.min(7,G/8),grid='',bars='',lines='';
+ function yy(v){return T+PH-v/max*PH;}function label(v){return v&gt;=10000?Math.round(v/10000)+'만':Math.round(v).toLocaleString('ko-KR');}
+ function text(x,y,str,color,size,anchor){return '&lt;text class="bmw-finance-label" x="'+x+'" y="'+y+'" text-anchor="'+(anchor||'middle')+'" style="fill:'+color+'!important;font-size:'+size+'px"&gt;'+str+'&lt;/text&gt;';}
+ for(var k=0;k&lt;=4;k++){var v=max*k/4,y=yy(v);grid+='&lt;line x1="'+L+'" x2="'+(W-8)+'" y1="'+y+'" y2="'+y+'" stroke="#7184a7" stroke-opacity=".24" stroke-dasharray="3 5"/&gt;'+text(L-6,y+3,label(v),'#94a3b8',9,'end');}
+ data.forEach(function(d,i){var center=L+G*(i+.5),x=center-BAR-GAP/2;
+  if(detailed)bars+='&lt;g data-compare-year="'+d.year+'" role="button" tabindex="0" aria-label="'+d.year+'년 상세 금액" aria-pressed="'+(d.year===selectedYear)+'" onclick="selectCompareYear('+d.year+')" onkeydown="if(event.keyCode===13||event.keyCode===32){event.preventDefault();selectCompareYear('+d.year+');}" style="cursor:pointer"&gt;&lt;rect class="compare-year-focus" x="'+(L+G*i)+'" y="'+(T-10)+'" width="'+G+'" height="'+(H-T+10)+'" rx="4" fill="#93c5fd" fill-opacity="'+(d.year===selectedYear?'.12':'0')+'"/&gt;';
+
+  ['income','expense'].forEach(function(key,j){var bx=x+j*(BAR+GAP),y=yy(d[key]),color=j?'#f59e0b':'#3b82f6';
+   bars+='&lt;rect class="bmw-finance-bar" x="'+bx+'" y="'+y+'" width="'+BAR+'" height="'+(H-B-y)+'" rx="3" style="fill:'+color+'!important;animation-delay:'+Math.min(i*22+j*30,220)+'ms"&gt;&lt;title&gt;'+d.year+' '+(j?'지출':'수입')+' '+Math.round(d[key]).toLocaleString('ko-KR')+'원&lt;/title&gt;&lt;/rect&gt;';
+   if(G&gt;=42)bars+=text(bx+BAR/2,y-7,label(d[key]),j?'#fde68a':'#bfdbfe',G&lt;65?8:10);
   });
-  if(data.length&gt;1){['income','expense'].forEach(function(key,j){
-    var pts=data.map(function(d,i){return (L+i*G+12+j*(BAR+GAP)+BAR/2)+','+yy(d[key]);}).join(' ');
-    lines+='&lt;polyline points="'+pts+'" fill="none" stroke="'+(j?'#fcd34d':'#93c5fd')+'" stroke-width="1.5" stroke-opacity=".8" stroke-dasharray="4 5" style="fill:none!important;pointer-events:none"/&gt;';
-  });}
-  return '&lt;div style="display:flex;gap:20px;align-items:center;margin:16px 0 22px 4px;font-size:12px;color:#cbd5e1"&gt;'+
-    '&lt;span style="display:inline-flex;align-items:center;gap:7px"&gt;&lt;i style="display:inline-block;width:10px;height:10px;border-radius:3px;background:#3b82f6"&gt;&lt;/i&gt;수입&lt;/span&gt;'+
-    '&lt;span style="display:inline-flex;align-items:center;gap:7px"&gt;&lt;i style="display:inline-block;width:10px;height:10px;border-radius:3px;background:#f59e0b"&gt;&lt;/i&gt;지출&lt;/span&gt;'+
-    '&lt;span style="font-size:11px;color:#94a3b8"&gt;점선: 연도별 추이 · 단위: 원&lt;/span&gt;&lt;/div&gt;'+
-    '&lt;svg xmlns="http://www.w3.org/2000/svg" width="'+W+'" height="'+H+'" role="img" aria-label="연도별 수입 지출 비교 및 추이" style="display:block;flex-shrink:0"&gt;'+grid+bars+lines+'&lt;/svg&gt;';
+  bars+=text(center,H-8,G&lt;38?"'"+String(d.year).slice(2):d.year,'#cbd5e1',G&lt;38?8:10);
+  if(detailed)bars+='&lt;/g&gt;';
+ });
+ if(data.length&gt;1)['income','expense'].forEach(function(key,j){var pts=data.map(function(d,i){return (L+G*(i+.5)+(j?1:-1)*(BAR+GAP)/2)+','+yy(d[key]);}).join(' ');lines+='&lt;polyline class="bmw-finance-trend" points="'+pts+'" fill="none" stroke="'+(j?'#fcd34d':'#93c5fd')+'" stroke-width="1.05" stroke-opacity="0.65" stroke-dasharray="4 5" style="fill:none!important;pointer-events:none"/&gt;';});
+ // Compare only displayed recorded totals. A/B is explicitly A minus B, never a forecast.
+ function compactDelta(v){return (v&gt;0?'+':v&lt;0?'−':'')+(Math.abs(v)&gt;=10000?(Math.abs(v)/10000).toFixed(1).replace(/\.0$/,'')+'만':Math.round(Math.abs(v)).toLocaleString('ko-KR')+'원');}
+ function peakYear(key){var v=Math.max.apply(null,data.map(function(d){return Number(d[key]||0);}));if(v&lt;=0)return '없음';var rows=data.filter(function(d){return Number(d[key]||0)===v;});return rows[0].year+'년'+(rows.length&gt;1?' 외':'');}
+ var insight,detail;
+ if(__cmpMode==='ab'&amp;&amp;data.length===2){
+  var di=data[0].income-data[1].income,de=data[0].expense-data[1].expense;
+  insight='A−B 수입 '+compactDelta(di)+' · 지출 '+compactDelta(de);
+  detail='A('+data[0].year+') − B('+data[1].year+'): 수입 '+Math.round(di).toLocaleString('ko-KR')+'원, 지출 '+Math.round(de).toLocaleString('ko-KR')+'원. 기록된 누적 실적 비교이며, 진행 중 연도는 연간 확정치가 아닙니다.';
+ }else{
+  insight='최고 수입 '+peakYear('income')+' · 지출 '+peakYear('expense');
+  detail='조회 범위의 기록된 누적 실적 기준 최고액 연도입니다. 동률은 첫 연도와 외로 표시합니다. 진행 중 연도는 연간 확정치가 아닙니다. 점선은 표시된 연도별 실적 추이입니다.';
+ }
+ var meta=document.getElementById(__cmpMode==='range'?'compareRangeMeta':'compareABMeta');
+ if(meta)meta.innerHTML='&lt;div class="compare-meta-legend"&gt;&lt;span&gt;&lt;i style="display:inline-block;width:9px;height:9px;border-radius:2px;background:#3b82f6;margin-right:5px"&gt;&lt;/i&gt;수입&lt;/span&gt;&lt;span&gt;&lt;i style="display:inline-block;width:9px;height:9px;border-radius:2px;background:#f59e0b;margin-right:5px"&gt;&lt;/i&gt;지출&lt;/span&gt;&lt;/div&gt;&lt;div class="compare-meta-summary" title="'+detail+'"&gt;'+insight+'&lt;/div&gt;';
+ var inspector='';
+ if(detailed){
+  var unique=years.filter(function(y,i){return years.indexOf(y)===i;});
+  inspector='&lt;div class="compare-inspector"&gt;&lt;select class="compare-inspect-year" aria-label="상세 조회 연도" onchange="selectCompareYear(Number(this.value))"&gt;'+unique.map(function(y){return '&lt;option value="'+y+'"'+(y===selectedYear?' selected':'')+'&gt;'+y+'년&lt;/option&gt;';}).join('')+'&lt;/select&gt;&lt;div class="compare-year-readout" aria-live="polite"&gt;'+compareYearReadout(selectedYear)+'&lt;/div&gt;&lt;/div&gt;';
+ }
+ return '&lt;svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 '+W+' '+H+'" width="100%" height="'+H+'" preserveAspectRatio="xMidYMid meet" role="'+(detailed?'group':'img')+'" aria-label="연도별 수입 지출 비교" style="display:block;width:100%;min-width:0;max-width:100%;height:'+H+'px"&gt;'+grid+bars+lines+'&lt;/svg&gt;'+inspector;
 }
 
 function renderCompareChart(){
@@ -35673,6 +35723,8 @@ window.renderFyTabs=renderFyTabs;
 window.initFyEngine=initFyEngine;
 window.renderCompareChart=renderCompareChart;
 window.switchCompareTab=switchCompareTab;
+window.selectCompareYear=selectCompareYear;
+window.toggleCompareDetail=toggleCompareDetail; // Required by the detail button inline onclick; keep both variants in sync.
 window.getFyRange=getFyRange;
 window.isDateInFy=isDateInFy;
 
@@ -35873,6 +35925,21 @@ window.isDateInFy=isDateInFy;
       var html='&lt;button class="btn month-btn '+(cur==='all'?'active':'')+'" data-v57-month="all"&gt;전체&lt;/button&gt;'+
         months.map(function(m){return '&lt;button class="btn month-btn '+(cur===m?'active':'')+'" data-v57-month="'+m+'"&gt;'+m+'월&lt;/button&gt;';}).join('');
       var host=document.getElementById(id); if(host &amp;&amp; host.innerHTML!==html)host.innerHTML=html;
+      if(host)requestAnimationFrame(function(){
+        var active=host.querySelector('.month-btn.active'),first=host.querySelector('.month-btn'),last=host.querySelector('.month-btn:last-child');
+        if(!active||!first||!last||!host.clientWidth)return;
+        host.style.setProperty('box-sizing','border-box','important');
+        host.style.setProperty('width','100%','important');
+        host.style.setProperty('padding','0','important');
+        host.style.setProperty('display','flex','important');
+        host.style.setProperty('flex-direction','row','important');
+        host.style.setProperty('flex-wrap','nowrap','important');
+        host.style.setProperty('justify-content','flex-start','important');
+        host.style.setProperty('overflow-x','auto','important');
+        host.querySelectorAll('.month-btn').forEach(function(btn){btn.style.setProperty('flex','0 0 auto','important');});
+        var rr=host.getBoundingClientRect(),br=active.getBoundingClientRect();
+        host.scrollTo({left:host.scrollLeft+br.left+br.width/2-rr.left-host.clientWidth/2,behavior:'smooth'});
+      });
     });
   }
   function rowHtml(r,bal){
@@ -35937,10 +36004,14 @@ window.isDateInFy=isDateInFy;
     var logo=e.target&amp;&amp;e.target.closest&amp;&amp;e.target.closest('#topLogo,#loginLogo');
     var dash=e.target&amp;&amp;e.target.closest&amp;&amp;e.target.closest('[data-page="dashboard"]');
     if(logo||dash){
+      window.__bmwFocusScrollUntil=0;window.__bmwScrollSequence=(window.__bmwScrollSequence||0)+1;
+      window.__pendingDashLedgerContext=null;window.__dashLedgerReturnOrigin=null;window.feeSelectedMemberName='';
+      if(typeof clearDashLedgerMemberContext==='function')clearDashLedgerMemberContext({keepPending:false,keepActive:false,keepReturnOrigin:false});
       setFy(currentCalendarFy()); expenseMonth='all'; setSharedMonth(new Date().getMonth()+1);
       setTimeout(function(){
         if(typeof setActiveFy==='function') setActiveFy(currentFy());
         hydrate(false);
+        if(typeof scrollSectionStart==='function')scrollSectionStart(document.getElementById('dashboard'),'page-top');
       },0);
     }
   },true);
@@ -35965,6 +36036,7 @@ window.isDateInFy=isDateInFy;
   }
 
   // Replace dashboard inquiry entry point only; ledger page remains independent.
+  window.bmwSetInquiryMonth=function(v){setSharedMonth(v);schedule();};
   window.renderDashTable=function(){ schedule(); };
   window.renderDashMonthButtons=function(){ renderMonthButtons(); };
 
@@ -35972,6 +36044,43 @@ window.isDateInFy=isDateInFy;
   else hydrate(false);
 })();
 // END PROTECTED BMW-MONTH-01. Required checks: expense 8 -&gt; both 8; inquiry 9 -&gt; expense stays 8.
+&lt;/script&gt;
+
+&lt;script id="bmw-mobile-layout-runtime-v1"&gt;
+(function(){
+ function fitKpis(){
+  ['kBal','kIn','kOut','kDelinq'].forEach(function(id){
+   var el=document.getElementById(id);if(!el||!el.clientWidth)return;
+   var mobile=matchMedia('(max-width:768px)').matches;
+   var base=id==='kDelinq'?(mobile?30:34):(mobile?(id==='kBal'?34:29):(id==='kBal'?42:34));
+   el.style.setProperty('font-size',base+'px','important');
+   while(el.scrollWidth&gt;el.clientWidth+1&amp;&amp;base&gt;12){base--;el.style.setProperty('font-size',base+'px','important');}
+  });
+ }
+ window.bmwFitKpis=fitKpis;
+ function boot(){
+  var root=document.getElementById('dashboard');if(root){
+   new MutationObserver(function(){requestAnimationFrame(fitKpis);}).observe(root,{childList:true,subtree:true,characterData:true});
+   if(window.ResizeObserver)new ResizeObserver(fitKpis).observe(root);
+  }
+  fitKpis();
+ }
+ document.addEventListener('click',function(e){
+  var cake=e.target.closest('#birthdayKpiCard .birthday-kpi-badge');if(!cake)return;
+  var card=document.getElementById('birthdayKpiCard');
+  card.querySelectorAll('.bmw-birthday-spark').forEach(function(n){n.remove();});
+  for(var i=0;i&lt;28;i++){
+   var n=document.createElement('i'),angle=(i/28)*Math.PI*2;
+   n.className='bmw-birthday-spark';n.setAttribute('aria-hidden','true');
+   n.style.background=['#fbbf24','#60a5fa','#f472b6','#34d399'][i%4];
+   n.style.setProperty('--spark-x',Math.round(Math.cos(angle)*100)+'px');
+   n.style.setProperty('--spark-y',Math.round(Math.sin(angle)*80+40)+'px');
+   card.appendChild(n);setTimeout(function(node){node.remove();},1200,n);
+  }
+ },false);
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
+ window.addEventListener('resize',function(){fitKpis();if(typeof renderCompareChart==='function')renderCompareChart();});
+})();
 &lt;/script&gt;
 </textarea>
 
@@ -36183,25 +36292,17 @@ window.isDateInFy=isDateInFy;
 <script id="bmw-fy-anchor-reconciliation">
 /* FY opening/closing are one continuous cash ledger anchored to confirmed FY2026.
    Earlier amounts are reconstructed, not independently bank-certified. */
-window.bmwConfirmedOpening = function(fy){
-  var y=Number(fy), anchor=2026, amount=5622211;
-  if(!Number.isInteger(y) || y<2014 || y>2200) return 0;
-  var rows=(typeof state!=='undefined' && state && Array.isArray(state.ledger))?state.ledger:[];
-  function range(n){
-    if(n===2026) return ['2026-02','2026-12'];
-    if(n>=2027) return [n+'-01',n+'-12'];
-    return [n+'-02',(n+1)+'-01'];
-  }
-  var lo=range(Math.min(y,anchor))[0], hi=range(Math.max(y,anchor)-1)[1], net=0;
-  if(y===anchor) return amount;
-  rows.forEach(function(r){
-    var ym=String(r.date||'').slice(0,7);
-    if(ym>=lo && ym<=hi){
-      var a=Math.round(Number(r.amount)||0);
-      if(r.kind==='income') net+=a; else if(r.kind==='expense') net-=a;
-    }
-  });
-  return amount+(y<anchor?-net:net);
+window.bmwConfirmedOpening = function(fy,ignoreOwnLock){
+ const y=Number(fy);if(!Number.isInteger(y)||y<2014||y>2200)return 0;
+ const st=typeof state!=='undefined'&&state?state:{settings:{},ledger:[]},locks=st.settings.fyOpeningLocks||{};
+ let base=2026,amount=5622211;
+ // A confirmed FY2026 anchor remains the historical baseline. Later enabled locks propagate forward.
+ const candidates=Object.keys(locks).map(Number).filter(n=>(ignoreOwnLock?n<y:n<=y)&&(y<2026||n>=2026)).sort((a,b)=>b-a);
+ for(const n of candidates){const lock=locks[String(n)],enabled=lock&&typeof lock==='object'?lock.enabled:lock!==''&&lock!=null;if(enabled){base=n;amount=Math.round(Number(typeof lock==='object'?lock.amount:lock)||0);break;}}
+ function range(n){return n<2026?[n+'-02',(n+1)+'-01']:n===2026?['2026-02','2026-12']:[n+'-01',n+'-12'];}
+ if(y===base)return amount;const lo=range(Math.min(y,base))[0],hi=range(Math.max(y,base)-1)[1];let net=0;
+ for(const r of st.ledger||[]){const ym=String(r.date||'').slice(0,7);if(ym>=lo&&ym<=hi){const a=Math.round(Number(r.amount)||0);if(r.kind==='income')net+=a;else if(r.kind==='expense')net-=a;}}
+ return amount+(y<base?-net:net);
 };
 </script>
 <script id="bmw-fy-opening-lock-v2-script">
@@ -36268,7 +36369,7 @@ window.bmwConfirmedOpening = function(fy){
     return {income:inc, expense:exp};
   }
   function autoOpening(fy){
-    if(window.bmwConfirmedOpening) return window.bmwConfirmedOpening(fy);
+    if(window.bmwConfirmedOpening) return window.bmwConfirmedOpening(fy,true);
     var st=getSettings(), start=Number(st.startYear||2014), y=Number(fy);
     if(!isFinite(y)) return num(st.carryover);
     if(y<=start) return num(st.carryover||0); // BMW 최초 FY2014는 기본 0원
@@ -36512,7 +36613,7 @@ window.bmwConfirmedOpening = function(fy){
     return {income:inc, expense:exp};
   }
   function autoOpening(fy){
-    if(window.bmwConfirmedOpening) return window.bmwConfirmedOpening(fy);
+    if(window.bmwConfirmedOpening) return window.bmwConfirmedOpening(fy,true);
     var y=Number(fy), s=startYear();
     if(!isFinite(y)) return 0;
     // BMW 최초 회계연도는 0원에서 출발한다. carryover는 과거 호환값으로만 두고, 잠금 엔진에서는 사용하지 않는다.
@@ -36787,7 +36888,7 @@ window.bmwConfirmedOpening = function(fy){
   }
   function hasLock(fy){ var l=getLocks()[String(fy)]; return !!(l && l.enabled); }
   function autoOpening(fy){
-    if(window.bmwConfirmedOpening) return window.bmwConfirmedOpening(fy);
+    if(window.bmwConfirmedOpening) return window.bmwConfirmedOpening(fy,true);
     fy=Number(fy);
     if(!fy || fy<=2014) return 0;
     return appliedClosing(fy-1);
@@ -37706,6 +37807,21 @@ window.bmwConfirmedOpening = function(fy){
       var html='<button class="btn month-btn '+(cur==='all'?'active':'')+'" data-v57-month="all">전체</button>'+
         months.map(function(m){return '<button class="btn month-btn '+(cur===m?'active':'')+'" data-v57-month="'+m+'">'+m+'월</button>';}).join('');
       var host=document.getElementById(id); if(host && host.innerHTML!==html)host.innerHTML=html;
+      if(host)requestAnimationFrame(function(){
+        var active=host.querySelector('.month-btn.active'),first=host.querySelector('.month-btn'),last=host.querySelector('.month-btn:last-child');
+        if(!active||!first||!last||!host.clientWidth)return;
+        host.style.setProperty('box-sizing','border-box','important');
+        host.style.setProperty('width','100%','important');
+        host.style.setProperty('padding','0','important');
+        host.style.setProperty('display','flex','important');
+        host.style.setProperty('flex-direction','row','important');
+        host.style.setProperty('flex-wrap','nowrap','important');
+        host.style.setProperty('justify-content','flex-start','important');
+        host.style.setProperty('overflow-x','auto','important');
+        host.querySelectorAll('.month-btn').forEach(function(btn){btn.style.setProperty('flex','0 0 auto','important');});
+        var rr=host.getBoundingClientRect(),br=active.getBoundingClientRect();
+        host.scrollTo({left:host.scrollLeft+br.left+br.width/2-rr.left-host.clientWidth/2,behavior:'smooth'});
+      });
     });
   }
   function rowHtml(r,bal){
@@ -37770,10 +37886,14 @@ window.bmwConfirmedOpening = function(fy){
     var logo=e.target&&e.target.closest&&e.target.closest('#topLogo,#loginLogo');
     var dash=e.target&&e.target.closest&&e.target.closest('[data-page="dashboard"]');
     if(logo||dash){
+      window.__bmwFocusScrollUntil=0;window.__bmwScrollSequence=(window.__bmwScrollSequence||0)+1;
+      window.__pendingDashLedgerContext=null;window.__dashLedgerReturnOrigin=null;window.feeSelectedMemberName='';
+      if(typeof clearDashLedgerMemberContext==='function')clearDashLedgerMemberContext({keepPending:false,keepActive:false,keepReturnOrigin:false});
       setFy(currentCalendarFy()); expenseMonth='all'; setSharedMonth(new Date().getMonth()+1);
       setTimeout(function(){
         if(typeof setActiveFy==='function') setActiveFy(currentFy());
         hydrate(false);
+        if(typeof scrollSectionStart==='function')scrollSectionStart(document.getElementById('dashboard'),'page-top');
       },0);
     }
   },true);
@@ -37798,6 +37918,7 @@ window.bmwConfirmedOpening = function(fy){
   }
 
   // Replace dashboard inquiry entry point only; ledger page remains independent.
+  window.bmwSetInquiryMonth=function(v){setSharedMonth(v);schedule();};
   window.renderDashTable=function(){ schedule(); };
   window.renderDashMonthButtons=function(){ renderMonthButtons(); };
 
@@ -37805,4 +37926,41 @@ window.bmwConfirmedOpening = function(fy){
   else hydrate(false);
 })();
 // END PROTECTED BMW-MONTH-01. Required checks: expense 8 -> both 8; inquiry 9 -> expense stays 8.
+</script>
+
+<script id="bmw-mobile-layout-runtime-v1">
+(function(){
+ function fitKpis(){
+  ['kBal','kIn','kOut','kDelinq'].forEach(function(id){
+   var el=document.getElementById(id);if(!el||!el.clientWidth)return;
+   var mobile=matchMedia('(max-width:768px)').matches;
+   var base=id==='kDelinq'?(mobile?30:34):(mobile?(id==='kBal'?34:29):(id==='kBal'?42:34));
+   el.style.setProperty('font-size',base+'px','important');
+   while(el.scrollWidth>el.clientWidth+1&&base>12){base--;el.style.setProperty('font-size',base+'px','important');}
+  });
+ }
+ window.bmwFitKpis=fitKpis;
+ function boot(){
+  var root=document.getElementById('dashboard');if(root){
+   new MutationObserver(function(){requestAnimationFrame(fitKpis);}).observe(root,{childList:true,subtree:true,characterData:true});
+   if(window.ResizeObserver)new ResizeObserver(fitKpis).observe(root);
+  }
+  fitKpis();
+ }
+ document.addEventListener('click',function(e){
+  var cake=e.target.closest('#birthdayKpiCard .birthday-kpi-badge');if(!cake)return;
+  var card=document.getElementById('birthdayKpiCard');
+  card.querySelectorAll('.bmw-birthday-spark').forEach(function(n){n.remove();});
+  for(var i=0;i<28;i++){
+   var n=document.createElement('i'),angle=(i/28)*Math.PI*2;
+   n.className='bmw-birthday-spark';n.setAttribute('aria-hidden','true');
+   n.style.background=['#fbbf24','#60a5fa','#f472b6','#34d399'][i%4];
+   n.style.setProperty('--spark-x',Math.round(Math.cos(angle)*100)+'px');
+   n.style.setProperty('--spark-y',Math.round(Math.sin(angle)*80+40)+'px');
+   card.appendChild(n);setTimeout(function(node){node.remove();},1200,n);
+  }
+ },false);
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
+ window.addEventListener('resize',function(){fitKpis();if(typeof renderCompareChart==='function')renderCompareChart();});
+})();
 </script>
