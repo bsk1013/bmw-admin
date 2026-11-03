@@ -17373,12 +17373,13 @@ function getFyTotalMonths(fy){
 function centerActiveFyTab(el){
  if(!el||!el.clientWidth)return;
  var btn=el.querySelector('.fy-tab.active[data-fy]');if(!btn)return;
- var children=Array.from(el.children),gap=parseFloat(getComputedStyle(el).columnGap)||4;
- var natural=children.reduce(function(sum,n){return sum+n.getBoundingClientRect().width;},0)+Math.max(0,children.length-1)*gap;
- var gutter=natural>el.clientWidth?Math.max(0,(el.clientWidth-btn.getBoundingClientRect().width)/2):0;
- el.style.paddingLeft=gutter+'px';el.style.paddingRight=gutter+'px';
+ // PROTECTED BMW-FY-NAV-01: left-aligned content, no artificial edge gutters.
+ // Center only within the natural horizontal scroll range; never move the page vertically.
+ el.style.paddingLeft='0px';el.style.paddingRight='0px';
  var row=el.getBoundingClientRect(),rect=btn.getBoundingClientRect();
- el.scrollTo({left:Math.max(0,el.scrollLeft+rect.left-row.left-(el.clientWidth-rect.width)/2),behavior:'smooth'});
+ var target=el.scrollLeft+rect.left-row.left-(el.clientLeft||0)-(el.clientWidth-rect.width)/2;
+ var limit=Math.max(0,el.scrollWidth-el.clientWidth);
+ el.scrollTo({left:Math.min(limit,Math.max(0,target)),behavior:'smooth'});
 }
 function renderFyTabs(containerId, activeFy){
   var el=document.getElementById(containerId);
@@ -35402,12 +35403,13 @@ function getFyTotalMonths(fy){
 function centerActiveFyTab(el){
  if(!el||!el.clientWidth)return;
  var btn=el.querySelector('.fy-tab.active[data-fy]');if(!btn)return;
- var children=Array.from(el.children),gap=parseFloat(getComputedStyle(el).columnGap)||4;
- var natural=children.reduce(function(sum,n){return sum+n.getBoundingClientRect().width;},0)+Math.max(0,children.length-1)*gap;
- var gutter=natural&gt;el.clientWidth?Math.max(0,(el.clientWidth-btn.getBoundingClientRect().width)/2):0;
- el.style.paddingLeft=gutter+'px';el.style.paddingRight=gutter+'px';
+ // PROTECTED BMW-FY-NAV-01: left-aligned content, no artificial edge gutters.
+ // Center only within the natural horizontal scroll range; never move the page vertically.
+ el.style.paddingLeft='0px';el.style.paddingRight='0px';
  var row=el.getBoundingClientRect(),rect=btn.getBoundingClientRect();
- el.scrollTo({left:Math.max(0,el.scrollLeft+rect.left-row.left-(el.clientWidth-rect.width)/2),behavior:'smooth'});
+ var target=el.scrollLeft+rect.left-row.left-(el.clientLeft||0)-(el.clientWidth-rect.width)/2;
+ var limit=Math.max(0,el.scrollWidth-el.clientWidth);
+ el.scrollTo({left:Math.min(limit,Math.max(0,target)),behavior:'smooth'});
 }
 function renderFyTabs(containerId, activeFy){
   var el=document.getElementById(containerId);
